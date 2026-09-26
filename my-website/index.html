@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub AI — Your AI study partner</title>
+<style>
+:root{
+  --blue:#2F4EA0; --blue-dark:#243D82; --purple:#7B5FC4; --purple-light:#EDE7FA;
+  --bg:#F5F6FA; --text:#1C1F2A; --muted:#7B8092; --border:#E4E7F0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.4;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:#fff;border-bottom:1px solid var(--border);}
+.topnav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--blue);}
+.topnav .brand .logo-box{width:32px;height:32px;border-radius:9px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.topnav nav{display:flex;gap:32px;}
+.topnav nav a{color:var(--muted);font-weight:600;font-size:14px;}
+.topnav nav a.active{color:var(--blue);}
+.topnav .actions{display:flex;gap:12px;align-items:center;}
+
+.btn{padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
+.btn-primary{background:var(--blue);color:#fff;}
+.btn-primary:hover{background:var(--blue-dark);}
+.btn-outline{background:#fff;border-color:var(--blue);color:var(--blue);}
+.btn-outline:hover{background:#EEF1FB;}
+
+.eyebrow{color:var(--purple);font-weight:800;font-size:12px;letter-spacing:.08em;margin-bottom:12px;}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:64px 48px;background:var(--bg);}
+.hero h1{font-size:44px;line-height:1.15;color:var(--text);margin-bottom:18px;}
+.hero p{color:var(--muted);font-size:16px;max-width:540px;margin-bottom:26px;}
+.hero .trust{color:var(--muted);font-size:13px;margin-top:16px;}
+.hero-actions{display:flex;gap:14px;}
+.hero-visual{position:relative;border-radius:20px;overflow:hidden;background:var(--blue);min-height:340px;display:flex;align-items:flex-end;}
+.hero-photo{width:100%;height:140px;background:linear-gradient(135deg,#c9925a,#8a5b32);}
+.study-plan-card{position:absolute;top:120px;left:24px;background:#fff;border-radius:16px;padding:20px;width:280px;box-shadow:0 20px 40px rgba(0,0,0,.15);}
+.study-plan-card h3{font-size:16px;margin-bottom:4px;}
+.study-plan-card .muted{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.study-plan-card ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.study-plan-card li{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;}
+
+.feature-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:56px 48px;background:#fff;}
+.feature-card{border:1px solid var(--border);border-radius:16px;padding:24px;}
+.feature-card .icon{font-size:22px;color:var(--blue);margin-bottom:14px;}
+.feature-card h3{font-size:17px;margin-bottom:8px;}
+.feature-card p{color:var(--muted);font-size:14px;}
+
+.cta-band{background:var(--blue);padding:64px 48px;display:flex;justify-content:flex-end;min-height:180px;align-items:flex-end;}
+.cta-band .btn{background:#fff;color:var(--blue);}
+
+@media (max-width: 900px){
+  .hero,.feature-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <a href="index.html" class="brand"><span class="logo-box">📖</span> StudyHub AI</a>
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="fees.html">Fees</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="actions">
+    <a href="signup.html?tab=login" class="btn btn-outline">Log in</a>
+    <a href="signup.html?tab=signup" class="btn btn-primary">Get started</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">STUDY SMARTER, MZANSI</div>
+    <h1>Your AI study partner, built for student life.</h1>
+    <p>Turn lecture notes into clear summaries, focused tasks and confident answers — all in one calm workspace made for South African students.</p>
+    <div class="hero-actions">
+      <a href="signup.html?tab=signup" class="btn btn-primary">Start studying free</a>
+      <a href="#features" class="btn btn-outline">See how it works</a>
+    </div>
+    <p class="trust">Trusted by 8,000+ students across UCT, Wits, UP and Stellenbosch</p>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-photo"></div>
+    <div class="study-plan-card">
+      <h3>Today's study plan</h3>
+      <p class="muted">Economics 201 · 3 tasks</p>
+      <ul>
+        <li>✅ Review market structures</li>
+        <li>✅ Summarise lecture 8</li>
+        <li>✅ Quiz: elasticity</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature-row" id="features">
+  <div class="feature-card">
+    <div class="icon">🧠</div>
+    <h3>AI summaries</h3>
+    <p>Clear notes in seconds. Stay organised without losing your flow.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">📅</div>
+    <h3>Plan your week</h3>
+    <p>Tasks and lectures together. Stay organised without losing your flow.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">📄</div>
+    <h3>Ask your files</h3>
+    <p>Answers grounded in your work. Stay organised without losing your flow.</p>
+  </div>
+</section>
+
+<section class="cta-band">
+  <a href="signup.html?tab=signup" class="btn">Create your free workspace</a>
+</section>
+
+</body>
+</html>
