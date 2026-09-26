@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — StudyHub AI</title>
+<style>
+:root{
+  --blue:#2F4EA0; --purple:#7B5FC4; --bg:#F5F6FA; --text:#1C1F2A; --muted:#7B8092; --border:#E4E7F0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.4;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:#fff;border-bottom:1px solid var(--border);}
+.topnav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--blue);}
+.topnav .brand .logo-box{width:32px;height:32px;border-radius:9px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.topnav nav{display:flex;gap:32px;}
+.topnav nav a{color:var(--muted);font-weight:600;font-size:14px;}
+.topnav nav a.active{color:var(--blue);}
+.topnav .actions{display:flex;gap:12px;align-items:center;}
+
+.btn{padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
+.btn-primary{background:var(--blue);color:#fff;}
+.btn-outline{background:#fff;border-color:var(--blue);color:var(--blue);}
+
+.page{max-width:1280px;margin:0 auto;padding:56px 48px;}
+.page-title{font-size:32px;margin-bottom:8px;}
+.page-subtitle{color:var(--muted);font-size:14px;margin-bottom:40px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:32px;}
+
+.contact-info-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
+.contact-info-card strong{color:var(--blue);font-size:15px;display:block;margin-bottom:6px;}
+.contact-info-card p{color:var(--muted);font-size:13px;}
+
+.faq-item{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px 22px;margin-bottom:12px;cursor:pointer;}
+.faq-item .faq-q{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;}
+.faq-item .faq-a{display:none;color:var(--muted);font-size:13px;margin-top:10px;}
+.faq-item.open .faq-a{display:block;}
+
+.contact-form-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px;}
+.contact-form-card h2{font-size:22px;margin-bottom:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field label{font-size:13px;font-weight:700;margin-bottom:6px;display:block;}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;margin-bottom:16px;background:#fff;}
+.field textarea{resize:vertical;min-height:70px;}
+.form-note{font-size:12px;color:var(--muted);}
+
+@media (max-width: 900px){
+  .contact-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <a href="index.html" class="brand"><span class="logo-box">📖</span> StudyHub AI</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="fees.html">Fees</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+  <div class="actions">
+    <a href="signup.html?tab=login" class="btn btn-outline">Log in</a>
+    <a href="signup.html?tab=signup" class="btn btn-primary">Get started</a>
+  </div>
+</header>
+
+<div class="page">
+  <div class="contact-grid">
+    <div>
+      <h1 class="page-title">Let's solve it together.</h1>
+      <p class="page-subtitle">Questions about your account, campus rollout or study workflow? Our Cape Town support team is ready to help.</p>
+
+      <div class="contact-info-card">
+        <strong>hello@studyhub.ai</strong>
+        <p>Typical response time: under 4 hours, Monday–Friday, 08:00–17:00 SAST.</p>
+      </div>
+
+      <h3 style="margin-bottom:14px;">Quick answers</h3>
+      <div class="faq-item open" onclick="this.classList.toggle('open')">
+        <div class="faq-q"><span>Can I cancel my plan anytime?</span><span>–</span></div>
+        <div class="faq-a">Yes. Your plan remains active until the end of the current billing period.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q"><span>Does StudyHub train on my notes?</span><span>+</span></div>
+        <div class="faq-a">No. Your uploaded files are never used to train our models by default — you can manage this in Settings.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q"><span>Can my study group share files?</span><span>+</span></div>
+        <div class="faq-a">Yes, on the Study Group plan you get 50GB of shared storage for your group's files.</div>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <h2>Send us a message</h2>
+      <form onsubmit="event.preventDefault(); alert('Message sent! (demo only)');">
+        <div class="form-row">
+          <div class="field">
+            <label>First name</label>
+            <input type="text" placeholder="Naledi">
+          </div>
+          <div class="field">
+            <label>Last name</label>
+            <input type="text" placeholder="Mokoena">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="naledi@myuct.ac.za">
+        </div>
+        <div class="field">
+          <label>Topic</label>
+          <select>
+            <option>Choose a topic</option>
+            <option>Billing</option>
+            <option>Technical issue</option>
+            <option>Campus rollout</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea placeholder="Tell us how we can help..."></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Send message</button>
+        <p class="form-note" style="margin-top:14px;">By submitting, you agree to our privacy policy.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
