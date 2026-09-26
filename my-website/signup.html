@@ -21,7 +21,40 @@ input,select,textarea{font-family:inherit;}
 .auth-shell{display:grid;grid-template-columns:1fr 1.15fr;min-height:100vh;}
 .auth-visual{background:var(--blue);color:#fff;padding:40px;display:flex;flex-direction:column;justify-content:space-between;}
 .auth-visual .logo-box{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;}
-.auth-photo{width:100%;border-radius:16px;height:340px;background:linear-gradient(135deg,#7a9bd6,#2c4b98);margin:20px 0;}
+
+/* Updated styles for .auth-photo */
+.auth-photo{
+  width:100%;
+  border-radius:16px;
+  height:340px;
+  background:linear-gradient(135deg,#7a9bd6,#2c4b98);
+  margin:20px 0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:24px;
+  text-align:center;
+  gap:12px;
+}
+.auth-photo-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+.auth-photo h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+.auth-photo p {
+  font-size: 13px;
+  opacity: 0.85;
+  max-width: 280px;
+}
+
 .auth-quote{font-style:italic;font-size:14px;opacity:.9;}
 .auth-panel{padding:56px 64px;display:flex;flex-direction:column;justify-content:center;max-width:560px;}
 .auth-tabs{display:flex;gap:10px;margin-bottom:28px;}
@@ -50,7 +83,12 @@ input,select,textarea{font-family:inherit;}
   <div class="auth-visual">
     <span class="logo-box">📖</span>
     <div>
-      <div class="auth-photo"></div>
+      <!-- Added content inside the box here -->
+      <div class="auth-photo">
+        <span class="auth-photo-badge">⚡ AI Academic Assistant</span>
+        <h2>Master Your Modules</h2>
+        <p>Get personalized study roadmaps, instant answers, and exam preparation guides.</p>
+      </div>
       <p class="auth-quote">"I know exactly what to study next." — Zinhle, Wits</p>
     </div>
   </div>
