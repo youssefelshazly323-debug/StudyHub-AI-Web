@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fees — StudyHub AI</title>
+<style>
+:root{
+  --blue:#2F4EA0; --purple:#7B5FC4; --bg:#F5F6FA; --text:#1C1F2A; --muted:#7B8092; --border:#E4E7F0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.4;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:#fff;border-bottom:1px solid var(--border);}
+.topnav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--blue);}
+.topnav .brand .logo-box{width:32px;height:32px;border-radius:9px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.topnav nav{display:flex;gap:32px;}
+.topnav nav a{color:var(--muted);font-weight:600;font-size:14px;}
+.topnav nav a.active{color:var(--blue);}
+.topnav .actions{display:flex;gap:12px;align-items:center;}
+
+.btn{padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
+.btn-primary{background:var(--blue);color:#fff;}
+.btn-outline{background:#fff;border-color:var(--blue);color:var(--blue);}
+
+.page{max-width:1280px;margin:0 auto;padding:56px 48px;}
+.page-title{font-size:32px;margin-bottom:8px;}
+.page-subtitle{color:var(--muted);font-size:14px;margin-bottom:40px;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;}
+.price-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px;display:flex;flex-direction:column;position:relative;}
+.price-card.featured{background:var(--blue);color:#fff;border-color:var(--blue);transform:translateY(-6px);}
+.price-card .badge-pop{position:absolute;top:-14px;left:32px;background:var(--purple);color:#fff;font-size:11px;font-weight:800;padding:5px 12px;border-radius:20px;}
+.price-card h3{font-size:20px;margin-bottom:14px;}
+.price-card .price{font-size:36px;font-weight:800;margin-bottom:6px;}
+.price-card .price span{font-size:13px;font-weight:500;opacity:.7;}
+.price-card .desc{font-size:13px;opacity:.85;margin-bottom:22px;}
+.price-card ul{list-style:none;flex:1;display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.price-card li{font-size:14px;display:flex;gap:8px;align-items:flex-start;}
+.price-card.featured .btn-outline{background:#fff;color:var(--blue);border-color:#fff;}
+.fees-footnote{text-align:center;color:var(--muted);font-size:12px;margin-top:24px;}
+
+@media (max-width: 900px){
+  .pricing-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <a href="index.html" class="brand"><span class="logo-box">📖</span> StudyHub AI</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="fees.html" class="active">Fees</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="actions">
+    <a href="signup.html?tab=login" class="btn btn-outline">Log in</a>
+    <a href="signup.html?tab=signup" class="btn btn-primary">Get started</a>
+  </div>
+</header>
+
+<div class="page">
+  <h1 class="page-title">Simple plans for every study season</h1>
+  <p class="page-subtitle">Prices in South African rand. Cancel anytime. No surprise fees.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price">R0 <span>forever</span></div>
+      <p class="desc">For getting organised and trying AI study tools.</p>
+      <ul>
+        <li>✅ 3 AI summaries / month</li>
+        <li>✅ 1 GB file storage</li>
+        <li>✅ Basic task planning</li>
+      </ul>
+      <a href="signup.html?tab=signup&plan=free" class="btn btn-outline">Start free</a>
+    </div>
+
+    <div class="price-card featured">
+      <span class="badge-pop">MOST POPULAR</span>
+      <h3>Student</h3>
+      <div class="price">R49 <span>per month</span></div>
+      <ul>
+        <li>✅ Unlimited AI summaries</li>
+        <li>✅ 20 GB file storage</li>
+        <li>✅ AI chat with citations</li>
+        <li>✅ Smart weekly planning</li>
+      </ul>
+      <a href="signup.html?tab=signup&plan=student" class="btn btn-outline">Choose Student</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Study Group</h3>
+      <div class="price">R129 <span>per month · up to 5</span></div>
+      <p class="desc">For friends who learn better together.</p>
+      <ul>
+        <li>✅ Everything in Student</li>
+        <li>✅ Shared study spaces</li>
+        <li>✅ Group task boards</li>
+        <li>✅ 50 GB shared storage</li>
+      </ul>
+      <a href="signup.html?tab=signup&plan=group" class="btn btn-primary">Create a group</a>
+    </div>
+  </div>
+
+  <p class="fees-footnote">Secure billing · Student plan includes a 7-day free trial · VAT included where applicable</p>
+</div>
+
+</body>
+</html>
