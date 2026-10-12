@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Individual Study Plan — StudyHub AI</title>
+    <style>
+      :root {
+        --blue: #2f4ea0;
+        --purple: #7b5fc4;
+        --bg: #f5f6fa;
+        --panel: #ffffff;
+        --panel-soft: #eef1fb;
+        --text: #1c1f2a;
+        --muted: #7b8092;
+        --border: #e4e7f0;
+        --button: var(--blue);
+        --button-text: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      header,
+      section,
+      footer {
+        box-sizing: border-box;
+      }
+      .topnav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 48px;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .logo-box {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: var(--blue);
+        color: white;
+      }
+      nav {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+      }
+      nav a {
+        font-size: 0.95rem;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      nav a.active,
+      nav a:hover {
+        color: var(--blue);
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-weight: 700;
+        border: 1px solid var(--text);
+      }
+      .btn-primary {
+        background: var(--button);
+        color: var(--button-text);
+      }
+      .btn-outline {
+        background: #fff;
+        color: var(--text);
+      }
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 56px 48px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 26px;
+        align-items: stretch;
+      }
+      .hero-copy,
+      .profile-card,
+      .summary-box,
+      .task-list,
+      .info-panel {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+      }
+      .hero-copy {
+        padding: 28px;
+      }
+      .eyebrow {
+        display: inline-block;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: var(--panel-soft);
+        color: var(--purple);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        border: 1px solid var(--border);
+      }
+      .hero-copy h1 {
+        font-size: clamp(2rem, 2.8vw, 3.2rem);
+        margin-bottom: 12px;
+      }
+      .hero-copy p {
+        color: var(--muted);
+      }
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+      }
+      .profile-card {
+        padding: 24px;
+      }
+      .student-chip {
+        display: inline-block;
+        padding: 8px 12px;
+        background: var(--panel-soft);
+        color: var(--blue);
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 18px;
+        border: 1px solid var(--border);
+      }
+      .profile-card h3 {
+        margin-bottom: 12px;
+      }
+      .profile-list {
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+      .profile-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
+        color: var(--muted);
+      }
+      .profile-list strong {
+        color: var(--text);
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-top: 28px;
+      }
+      .summary-box {
+        padding: 22px;
+      }
+      .summary-box .label {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 8px;
+      }
+      .summary-box strong {
+        font-size: 2rem;
+      }
+      .task-list {
+        margin-top: 28px;
+        padding: 20px;
+      }
+      .task-list h2 {
+        margin-bottom: 16px;
+        font-size: 1.5rem;
+      }
+      .task-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .task-item:last-child {
+        border-bottom: none;
+      }
+      .task-name {
+        font-weight: 700;
+      }
+      .task-meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .status {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--panel-soft);
+        color: var(--blue);
+        font-weight: 700;
+        font-size: 0.78rem;
+        border: 1px solid var(--border);
+      }
+      .info-panel {
+        margin-top: 28px;
+        padding: 24px;
+      }
+      .info-panel h2 {
+        margin-bottom: 10px;
+      }
+      .info-panel p {
+        color: var(--muted);
+      }
+      @media (max-width: 900px) {
+        .topnav {
+          padding: 16px 20px;
+          flex-wrap: wrap;
+          gap: 14px;
+        }
+        nav {
+          order: 3;
+          width: 100%;
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+        .page {
+          padding: 32px 20px;
+        }
+        .hero,
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topnav">
+      <a class="brand" href="index.html"
+        ><span class="logo-box">📖</span> StudyHub AI</a
+      >
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="fees.html">Fees</a>
+        <a href="contact.html">Contact</a>
+        <a class="active" href="individual.html">Individual</a>
+      </nav>
+      <div class="actions">
+        <a class="btn btn-outline" href="signup.html?tab=login">Log in</a>
+        <a class="btn btn-primary" href="signup.html?tab=signup">Get started</a>
+      </div>
+    </header>
+
+    <div class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Individual plan</span>
+          <h1>Study plan for Naledi Mokoena</h1>
+          <p>
+            Keep the week simple. Your summaries, reading targets and assignment
+            tasks are all in one place, so you know what matters most without
+            digging around.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="contact.html">Ask for support</a>
+            <a class="btn btn-outline" href="fees.html">View pricing</a>
+          </div>
+        </div>
+
+        <aside class="profile-card">
+          <span class="student-chip">Student profile</span>
+          <h3>Academic snapshot</h3>
+          <ul class="profile-list">
+            <li><span>Course</span><strong>Economics 201</strong></li>
+            <li><span>Current week</span><strong>Week 5</strong></li>
+            <li><span>Study goal</span><strong>Exam prep</strong></li>
+            <li><span>Progress</span><strong>68%</strong></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="summary-grid">
+        <div class="summary-box">
+          <span class="label">Hours studied</span>
+          <strong>14.5</strong>
+        </div>
+        <div class="summary-box">
+          <span class="label">Tasks complete</span>
+          <strong>8/12</strong>
+        </div>
+        <div class="summary-box">
+          <span class="label">Next milestone</span>
+          <strong>Thu</strong>
+        </div>
+      </section>
+
+      <div class="task-list">
+        <h2>Current tasks</h2>
+        <div class="task-item">
+          <div>
+            <div class="task-name">Read chapter 5 summary</div>
+            <div class="task-meta">Due today • 45 min</div>
+          </div>
+          <span class="status">In progress</span>
+        </div>
+        <div class="task-item">
+          <div>
+            <div class="task-name">Complete practical worksheet</div>
+            <div class="task-meta">Due Thursday • 1 hr</div>
+          </div>
+          <span class="status">Ready</span>
+        </div>
+        <div class="task-item">
+          <div>
+            <div class="task-name">Review lecture notes</div>
+            <div class="task-meta">Due Friday • 30 min</div>
+          </div>
+          <span class="status">Queued</span>
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <h2>Study recommendation</h2>
+        <p>
+          Spend the next session on the topics you were least confident about,
+          then leave the final 30 minutes for quick revision questions before
+          Friday’s quiz.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
