@@ -1,123 +1,558 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyHub AI — Your AI study partner</title>
-<style>
-:root{
-  --blue:#2F4EA0; --blue-dark:#243D82; --purple:#7B5FC4; --purple-light:#EDE7FA;
-  --bg:#F5F6FA; --text:#1C1F2A; --muted:#7B8092; --border:#E4E7F0;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.4;}
-a{color:inherit;text-decoration:none;}
-button{font-family:inherit;cursor:pointer;}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyHub AI — Home</title>
+    <style>
+      :root {
+        --blue: #2f4ea0;
+        --blue-dark: #243e83;
+        --purple: #7b5fc4;
+        --bg: #f5f6fa;
+        --panel: #ffffff;
+        --panel-soft: #eef1fb;
+        --text: #1c1f2a;
+        --muted: #7b8092;
+        --border: #e4e7f0;
+        --button: var(--blue);
+        --button-text: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      header,
+      footer,
+      section,
+      div {
+        box-sizing: border-box;
+      }
 
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:#fff;border-bottom:1px solid var(--border);}
-.topnav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--blue);}
-.topnav .brand .logo-box{width:32px;height:32px;border-radius:9px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.topnav nav{display:flex;gap:32px;}
-.topnav nav a{color:var(--muted);font-weight:600;font-size:14px;}
-.topnav nav a.active{color:var(--blue);}
-.topnav .actions{display:flex;gap:12px;align-items:center;}
+      .topnav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 48px;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        color: var(--text);
+        font-size: 1.1rem;
+      }
+      .logo-box {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: var(--blue);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 1rem;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      nav a {
+        font-size: 0.95rem;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      nav a.active,
+      nav a:hover {
+        color: var(--blue);
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        border-radius: 12px;
+        border: 1px solid var(--text);
+        font-weight: 700;
+        transition: 0.2s ease;
+      }
+      .btn-primary {
+        background: var(--button);
+        color: var(--button-text);
+      }
+      .btn-primary:hover {
+        background: #000;
+      }
+      .btn-outline {
+        background: #fff;
+        color: var(--text);
+      }
+      .btn-outline:hover {
+        background: #f1f1ef;
+      }
 
-.btn{padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
-.btn-primary{background:var(--blue);color:#fff;}
-.btn-primary:hover{background:var(--blue-dark);}
-.btn-outline{background:#fff;border-color:var(--blue);color:var(--blue);}
-.btn-outline:hover{background:#EEF1FB;}
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 48px;
+        align-items: center;
+        padding: 72px 48px 48px;
+      }
+      .eyebrow {
+        display: inline-block;
+        padding: 8px 12px;
+        background: var(--panel-soft);
+        border-radius: 999px;
+        color: var(--purple);
+        font-weight: 800;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        border: 1px solid var(--border);
+      }
+      .hero h1 {
+        font-size: clamp(2.4rem, 3vw, 4rem);
+        line-height: 1.08;
+        margin-bottom: 18px;
+        max-width: 620px;
+      }
+      .hero p {
+        font-size: 1.08rem;
+        color: var(--muted);
+        max-width: 620px;
+        margin-bottom: 24px;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      .trust {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .hero-visual {
+        position: relative;
+        background: var(--blue);
+        min-height: 420px;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+      }
+      .hero-visual::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.02),
+          rgba(0, 0, 0, 0.06)
+        );
+      }
+      .session-card {
+        position: absolute;
+        left: 24px;
+        top: 34px;
+        background: #fff;
+        border-radius: 18px;
+        padding: 20px;
+        width: min(85%, 320px);
+        box-shadow: none;
+        border: 1px solid var(--border);
+      }
+      .session-card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 6px;
+      }
+      .session-card p {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .session-list {
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+      .session-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        color: var(--text);
+        font-size: 0.92rem;
+      }
+      .session-list li::before {
+        content: "✓";
+        display: grid;
+        place-items: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--panel-soft);
+        color: var(--blue);
+        font-weight: 800;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 6px;
+      }
+      .stat-box {
+        background: var(--panel);
+        padding: 22px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+      }
+      .stat-box strong {
+        display: block;
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+      }
+      .stat-box span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
 
-.eyebrow{color:var(--purple);font-weight:800;font-size:12px;letter-spacing:.08em;margin-bottom:12px;}
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:64px 48px;background:var(--bg);}
-.hero h1{font-size:44px;line-height:1.15;color:var(--text);margin-bottom:18px;}
-.hero p{color:var(--muted);font-size:16px;max-width:540px;margin-bottom:26px;}
-.hero .trust{color:var(--muted);font-size:13px;margin-top:16px;}
-.hero-actions{display:flex;gap:14px;}
-.hero-visual{position:relative;border-radius:20px;overflow:hidden;background:var(--blue);min-height:340px;display:flex;align-items:flex-end;}
-.hero-photo{width:100%;height:140px;background:linear-gradient(135deg,#c9925a,#8a5b32);}
-.study-plan-card{position:absolute;top:120px;left:24px;background:#fff;border-radius:16px;padding:20px;width:280px;box-shadow:0 20px 40px rgba(0,0,0,.15);}
-.study-plan-card h3{font-size:16px;margin-bottom:4px;}
-.study-plan-card .muted{font-size:12px;color:var(--muted);margin-bottom:14px;}
-.study-plan-card ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.study-plan-card li{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;}
+      .section-block {
+        padding: 20px 48px 64px;
+      }
+      .section-header {
+        margin-bottom: 22px;
+      }
+      .section-header h2 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+      }
+      .section-header p {
+        color: var(--muted);
+        max-width: 700px;
+      }
+      .feature-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+      }
+      .feature-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+      }
+      .icon {
+        font-size: 1.8rem;
+        margin-bottom: 14px;
+      }
+      .feature-card .icon {
+        color: var(--blue);
+      }
+      .feature-card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 12px;
+      }
+      .feature-card p {
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
 
-.feature-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:56px 48px;background:#fff;}
-.feature-card{border:1px solid var(--border);border-radius:16px;padding:24px;}
-.feature-card .icon{font-size:22px;color:var(--blue);margin-bottom:14px;}
-.feature-card h3{font-size:17px;margin-bottom:8px;}
-.feature-card p{color:var(--muted);font-size:14px;}
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .step-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 22px;
+      }
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--panel-soft);
+        color: var(--text);
+        font-weight: 800;
+        margin-bottom: 12px;
+        border: 1px solid var(--border);
+      }
+      .step-card h3 {
+        margin-bottom: 10px;
+      }
+      .step-card p {
+        color: var(--muted);
+      }
 
-.cta-band{background:var(--blue);padding:64px 48px;display:flex;justify-content:flex-end;min-height:180px;align-items:flex-end;}
-.cta-band .btn{background:#fff;color:var(--blue);}
+      .cta-band {
+        margin: 0 48px 64px;
+        background: var(--blue);
+        border-radius: 24px;
+        padding: 28px 34px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+      .cta-band .btn {
+        background: #fff;
+        color: var(--blue);
+        border-color: #fff;
+      }
+      .cta-band h3 {
+        font-size: 2rem;
+      }
+      .cta-band p {
+        opacity: 0.9;
+        max-width: 560px;
+      }
 
-@media (max-width: 900px){
-  .hero,.feature-row{grid-template-columns:1fr;}
-}
-</style>
-</head>
-<body>
+      footer {
+        padding: 0 48px 48px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--border);
+        padding-top: 22px;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
 
-<header class="topnav">
-  <a href="index.html" class="brand"><span class="logo-box">📖</span> StudyHub AI</a>
-  <nav>
-    <a href="index.html" class="active">Home</a>
-    <a href="about.html">About</a>
-    <a href="fees.html">Fees</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-  <div class="actions">
-    <a href="signup.html?tab=login" class="btn btn-outline">Log in</a>
-    <a href="signup.html?tab=signup" class="btn btn-primary">Get started</a>
-  </div>
-</header>
+      @media (max-width: 900px) {
+        .topnav {
+          padding: 16px 20px;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        nav {
+          order: 3;
+          width: 100%;
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+        .hero,
+        .feature-row,
+        .steps,
+        .stats {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          padding: 32px 20px 20px;
+        }
+        .section-block {
+          padding: 20px 20px 48px;
+        }
+        .cta-band {
+          margin: 0 20px 48px;
+          padding: 22px 18px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        footer {
+          padding: 0 20px 36px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topnav">
+      <a class="brand" href="index.html"
+        ><span class="logo-box">📖</span> StudyHub AI</a
+      >
+      <nav>
+        <a class="active" href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="fees.html">Fees</a>
+        <a href="contact.html">Contact</a>
+        <a href="individual.html">Individual</a>
+      </nav>
+      <div class="actions">
+        <a class="btn btn-outline" href="signup.html?tab=login">Log in</a>
+        <a class="btn btn-primary" href="signup.html?tab=signup">Get started</a>
+      </div>
+    </header>
 
-<section class="hero">
-  <div>
-    <div class="eyebrow">STUDY SMARTER, MZANSI</div>
-    <h1>Your AI study partner, built for student life.</h1>
-    <p>Turn lecture notes into clear summaries, focused tasks and confident answers — all in one calm workspace made for South African students.</p>
-    <div class="hero-actions">
-      <a href="signup.html?tab=signup" class="btn btn-primary">Start studying free</a>
-      <a href="#features" class="btn btn-outline">See how it works</a>
-    </div>
-    <p class="trust">Trusted by 8,000+ students across UCT, Wits, UP and Stellenbosch</p>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-photo"></div>
-    <div class="study-plan-card">
-      <h3>Today's study plan</h3>
-      <p class="muted">Economics 201 · 3 tasks</p>
-      <ul>
-        <li>✅ Review market structures</li>
-        <li>✅ Summarise lecture 8</li>
-        <li>✅ Quiz: elasticity</li>
-      </ul>
-    </div>
-  </div>
-</section>
+    <main>
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Study smarter</span>
+          <h1>Get your semester under control.</h1>
+          <p>
+            StudyHub keeps your notes, tasks and deadlines in one place, so you
+            can stop juggling tabs and just work out what matters next.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="signup.html?tab=signup"
+              >Create a free account</a
+            >
+            <a class="btn btn-outline" href="fees.html">See pricing</a>
+          </div>
+          <p class="trust">
+            Built for students who want a bit more structure and a lot less
+            stress.
+          </p>
+        </div>
 
-<section class="feature-row" id="features">
-  <div class="feature-card">
-    <div class="icon">🧠</div>
-    <h3>AI summaries</h3>
-    <p>Clear notes in seconds. Stay organised without losing your flow.</p>
-  </div>
-  <div class="feature-card">
-    <div class="icon">📅</div>
-    <h3>Plan your week</h3>
-    <p>Tasks and lectures together. Stay organised without losing your flow.</p>
-  </div>
-  <div class="feature-card">
-    <div class="icon">📄</div>
-    <h3>Ask your files</h3>
-    <p>Answers grounded in your work. Stay organised without losing your flow.</p>
-  </div>
-</section>
+        <div class="hero-visual" aria-label="Study plan preview">
+          <div class="session-card">
+            <h3>Today's study plan</h3>
+            <p>Economics 201 • 3 tasks</p>
+            <ul class="session-list">
+              <li>Review market structures</li>
+              <li>Summarise lecture 8</li>
+              <li>Complete quiz: elasticity</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-<section class="cta-band">
-  <a href="signup.html?tab=signup" class="btn">Create your free workspace</a>
-</section>
+      <section class="section-block">
+        <div class="stats">
+          <div class="stat-box">
+            <strong>12k+</strong>
+            <span>study summaries created</span>
+          </div>
+          <div class="stat-box">
+            <strong>94%</strong>
+            <span>students feel more organised</span>
+          </div>
+          <div class="stat-box">
+            <strong>5 min</strong>
+            <span>average time to plan a week</span>
+          </div>
+        </div>
+      </section>
 
-</body>
+      <section class="section-block">
+        <div class="section-header">
+          <h2>Everything students actually need</h2>
+          <p>
+            StudyHub brings your lectures, notes and study tasks together in one
+            place so you can spend less time organising and more time learning.
+          </p>
+        </div>
+
+        <div class="feature-row">
+          <article class="feature-card">
+            <div class="icon">🧠</div>
+            <h3>AI summaries</h3>
+            <p>
+              Turn messy lecture notes into clear revision points without
+              rewriting everything by hand.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="icon">📅</div>
+            <h3>Weekly planning</h3>
+            <p>
+              Keep your deadlines, lectures and tasks in one place so it is
+              easier to stay on track.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="icon">📄</div>
+            <h3>File Q&A</h3>
+            <p>
+              Ask questions about your uploaded notes and get answers based on
+              the material you already have.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="icon">🎯</div>
+            <h3>Focused study</h3>
+            <p>
+              Set up study sessions around the topics that actually matter
+              before a test or exam.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-header">
+          <h2>How it works</h2>
+        </div>
+        <div class="steps">
+          <article class="step-card">
+            <div class="step-number">1</div>
+            <h3>Upload your notes</h3>
+            <p>
+              Drop in lecture slides, class notes or readings from whatever
+              modules you are working on.
+            </p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">2</div>
+            <h3>Build a plan</h3>
+            <p>
+              StudyHub turns that content into summaries, tasks and a more
+              realistic study routine.
+            </p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">3</div>
+            <h3>Study with more clarity</h3>
+            <p>
+              Use quick answers, weekly tasks and simple guidance to keep moving
+              without the panic of a looming deadline.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div>
+          <h3>Ready to get on top of things?</h3>
+          <p>
+            Set up a study routine that actually feels manageable, instead of
+            one more thing to keep track of.
+          </p>
+        </div>
+        <a class="btn btn-outline" href="contact.html">Talk to us</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span>© 2026 StudyHub AI</span>
+        <span>Home • About • Fees • Contact</span>
+      </div>
+    </footer>
+  </body>
 </html>
