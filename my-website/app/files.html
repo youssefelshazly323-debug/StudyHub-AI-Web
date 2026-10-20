@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your files — StudyHub AI</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="app-brand" href="home.html"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
+      <nav class="side-nav">
+        <a href="home.html"><span class="nav-icon">⌂</span><span>Home</span></a><a href="profile.html"><span class="nav-icon">ⓘ</span><span>About</span></a>
+        <a class="active" href="files.html"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html"><span class="nav-icon">☷</span><span>To-Do</span></a>
+        <a href="schedule.html"><span class="nav-icon">▦</span><span>Schedule</span></a><a href="chat.html"><span class="nav-icon">◌</span><span>Chat</span></a>
+        <a href="../contact.html"><span class="nav-icon">▣</span><span>Contact</span></a>
+      </nav>
+      <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
+    </aside>
+    <main class="app-main">
+      <header class="page-head">
+        <div><h1>Your files</h1><p>Upload, organise and ask questions across your course material.</p></div>
+        <label class="button primary" for="upload">Upload files</label><input id="upload" type="file" multiple hidden />
+      </header>
+      <label class="upload-zone" for="upload">⇧ &nbsp; <span><strong>Drop lecture notes here, or browse</strong>PDF, DOCX, PPTX, XLSX · up to 50<br />MB each</span></label>
+      <div class="toolbar">
+        <label>Search files<input type="search" placeholder="Search by file or course..." /></label>
+        <button>All courses</button><button>All types</button><button>Newest first</button>
+      </div>
+      <section class="panel table-panel">
+        <table class="table">
+          <thead><tr><th>Name</th><th>Type</th><th>Course</th><th>Size</th><th>Modified</th><th>Owner</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><a href="summary.html">Market Structures — Lecture 8</a></td><td>PDF</td><td>Economics 201</td><td>4.2 MB</td><td>Today, 09:42</td><td>You</td><td><span class="tag">Summarised</span></td><td class="purple">•••</td></tr>
+            <tr><td>Cell Respiration Notes</td><td>DOCX</td><td>Biology 201</td><td>1.8 MB</td><td>Yesterday, 16:20</td><td>You</td><td><span class="tag">Ready</span></td><td class="purple">•••</td></tr>
+            <tr><td>Probability Tutorial 4</td><td>PDF</td><td>Statistics 101</td><td>2.4 MB</td><td>22 Sep, 14:05</td><td>Sipho N.</td><td><span class="tag">Processing</span></td><td class="purple">•••</td></tr>
+            <tr><td>Group Essay Research</td><td>DOCX</td><td>Economics 201</td><td>860 KB</td><td>20 Sep, 11:18</td><td>Ayesha K.</td><td><span class="tag">Shared</span></td><td class="purple">•••</td></tr>
+            <tr><td>BIO201 Lab Results</td><td>XLSX</td><td>Biology 201</td><td>522 KB</td><td>18 Sep, 08:33</td><td>You</td><td><span class="tag">Ready</span></td><td class="purple">•••</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>
