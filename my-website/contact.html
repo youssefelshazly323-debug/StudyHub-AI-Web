@@ -216,6 +216,160 @@
           grid-template-columns: 1fr;
         }
       }
+      :root {
+        --blue: #3262ad;
+        --purple: #9680cb;
+        --bg: #f3f5fa;
+        --text: #3262ad;
+        --muted: #7896c6;
+        --border: #8eabe2;
+      }
+      body {
+        color: var(--blue);
+        line-height: 1.45;
+      }
+      .topnav {
+        height: 57px;
+        padding: 0 48px;
+        border: 0;
+      }
+      .brand {
+        color: var(--blue);
+        font-size: 16px;
+      }
+      .logo-box {
+        width: 29px;
+        height: 29px;
+        border-radius: 9px;
+      }
+      nav {
+        gap: 24px;
+        margin-left: auto;
+        margin-right: 22px;
+      }
+      nav a {
+        color: var(--purple);
+        font-size: 11px;
+      }
+      .actions {
+        gap: 20px;
+      }
+      .btn {
+        min-height: 31px;
+        padding: 7px 13px;
+        border-color: var(--blue);
+        border-radius: 8px;
+        color: var(--blue);
+        font-size: 11px;
+      }
+      .btn-primary {
+        background: var(--blue);
+        color: #fff;
+      }
+      .page {
+        max-width: 942px;
+        padding: 36px 0;
+      }
+      .contact-grid {
+        grid-template-columns: 323px minmax(0, 1fr);
+        gap: 38px;
+      }
+      .page-title {
+        margin: 0 0 10px;
+        color: var(--blue);
+        font-size: 30px;
+      }
+      .page-subtitle {
+        margin-bottom: 12px;
+        font-size: 11px;
+      }
+      .contact-info-card,
+      .faq-item,
+      .contact-form-card {
+        border-color: #8eabe2;
+        border-radius: 13px;
+        box-shadow: 0 7px 14px rgba(43, 68, 119, .07);
+      }
+      .contact-info-card {
+        margin-bottom: 11px;
+        padding: 12px 14px;
+        font-size: 11px;
+      }
+      .contact-info-card strong {
+        margin-bottom: 7px;
+        font-size: 11px;
+      }
+      .contact-info-card p {
+        font-size: 11px;
+      }
+      .quick-title {
+        margin: 10px 0;
+        font-size: 16px;
+      }
+      .faq-item {
+        margin-bottom: 12px;
+        padding: 10px;
+        font-size: 10px;
+      }
+      .faq-a {
+        margin-top: 9px;
+        font-size: 11px;
+      }
+      .contact-form-card {
+        padding: 17px 20px;
+      }
+      .contact-form-card h2 {
+        margin-bottom: 8px;
+        font-size: 19px;
+      }
+      .form-row {
+        gap: 10px;
+      }
+      .field {
+        margin-bottom: 8px;
+      }
+      .field label {
+        margin-bottom: 3px;
+        font-size: 9px;
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        height: 33px;
+        padding: 8px 10px;
+        border-color: var(--purple);
+        border-radius: 9px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .field textarea {
+        min-height: 33px;
+        height: 33px;
+        resize: vertical;
+      }
+      .form-note {
+        margin-top: 10px;
+        font-size: 11px;
+      }
+      @media (max-width: 700px) {
+        .topnav {
+          height: auto;
+          min-height: 57px;
+          padding: 12px 18px;
+        }
+        nav {
+          order: 3;
+          width: 100%;
+          margin: 0;
+        }
+        .page {
+          padding: 26px 20px;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -228,7 +382,6 @@
         <a href="about.html">About</a>
         <a href="fees.html">Fees</a>
         <a class="active" href="contact.html">Contact</a>
-        <a href="individual.html">Individual</a>
       </nav>
       <div class="actions">
         <a class="btn btn-outline" href="signup.html?tab=login">Log in</a>
@@ -239,10 +392,10 @@
     <div class="page">
       <div class="contact-grid">
         <div>
-          <h1 class="page-title">Let’s sort it out.</h1>
+          <h1 class="page-title">Let’s solve it together.</h1>
           <p class="page-subtitle">
-            Questions about pricing, study support or how the platform fits into
-            your semester? We are happy to help.
+            Questions about your account, campus rollout or study workflow? Our
+            Cape Town support team is ready to help.
           </p>
 
           <div class="contact-info-card">
@@ -253,7 +406,7 @@
             </p>
           </div>
 
-          <h3 style="margin-bottom: 12px">Quick answers</h3>
+          <h3 class="quick-title">Quick answers</h3>
           <div class="faq-item open" onclick="this.classList.toggle('open')">
             <div class="faq-q">
               <span>Can I cancel my plan anytime?</span><span>–</span>
