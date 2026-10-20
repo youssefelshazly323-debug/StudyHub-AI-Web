@@ -25,13 +25,12 @@ studyhub-web/
 ├── fees.html
 ├── contact.html
 ├── signup.html
-├── css/style.css
-├── js/app.js
 └── app/
+    ├── app.css
     ├── home.html
     ├── profile.html
     ├── files.html
-    ├── ai-summary.html
+    ├── summary.html
     ├── todo.html
     ├── schedule.html
     └── chat.html
@@ -50,4 +49,3 @@ I plan to add real user accounts, a database, PDF uploads, working AI features, 
 ## About
 
 I created StudyHub AI as a project to make it easier for students to manage their study work in one place. The website is still a work in progress.
-
