@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do — StudyHub AI</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="app-brand" href="home.html"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
+      <nav class="side-nav">
+        <a href="home.html"><span class="nav-icon">⌂</span><span>Home</span></a><a href="profile.html"><span class="nav-icon">ⓘ</span><span>About</span></a>
+        <a href="files.html"><span class="nav-icon">▢</span><span>Files</span></a><a class="active" href="todo.html"><span class="nav-icon">☷</span><span>To-Do</span></a>
+        <a href="schedule.html"><span class="nav-icon">▦</span><span>Schedule</span></a><a href="chat.html"><span class="nav-icon">◌</span><span>Chat</span></a>
+        <a href="../contact.html"><span class="nav-icon">▣</span><span>Contact</span></a>
+      </nav>
+      <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
+    </aside>
+    <main class="app-main">
+      <header class="page-head"><div><h1>To-Do</h1><p>5 tasks · 2 due today</p></div><button class="primary">Add task</button></header>
+      <section class="dashboard-grid" style="grid-template-columns:minmax(0,2.4fr) minmax(190px,.8fr)">
+        <article class="panel"><h2>75% complete this week</h2><div class="progress-line" style="height:8px"><span style="width:65%"></span></div></article>
+        <article class="panel"><p>Focus suggestion</p><h2>Start the essay outline next</h2></article>
+      </section>
+      <div class="tabs">
+        <button class="selected">All 12</button><button>Today 2</button><button>Upcoming 7</button><button>Completed 3</button>
+      </div>
+      <section class="panel" style="min-height:526px">
+        <label class="todo-row"><input type="checkbox" /><span><strong>Submit Economics essay outline</strong><small><span class="tag">Economics 201</span> &nbsp; Today · 16:00</small></span><span class="tag">High</span><span class="purple">•••</span></label>
+        <label class="todo-row"><input type="checkbox" /><span><strong>Revise cell respiration diagrams</strong><small><span class="tag">Biology 201</span> &nbsp; Today · 19:30</small></span><span class="tag">Medium</span><span class="purple">•••</span></label>
+        <label class="todo-row"><input type="checkbox" /><span><strong>Complete probability tutorial 4</strong><small><span class="tag">Statistics 101</span> &nbsp; Tomorrow · 18:00</small></span><span class="tag">High</span><span class="purple">•••</span></label>
+        <label class="todo-row"><input type="checkbox" /><span><strong>Read chapter 6: Labour markets</strong><small><span class="tag">Economics 201</span> &nbsp; Mon · 10:00</small></span><span class="tag">Low</span><span class="purple">•••</span></label>
+        <label class="todo-row done"><input type="checkbox" checked /><span><strong>Upload BIO201 lab notes</strong><small><span class="tag">Biology 201</span> &nbsp; Yesterday · 15:00</small></span><span class="tag">Done</span><span class="purple">•••</span></label>
+      </section>
+    </main>
+    <script>
+      document.querySelectorAll(".tabs button").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelector(".tabs .selected")?.classList.remove("selected");
+          tab.classList.add("selected");
+        });
+      });
+    </script>
+  </body>
+</html>
