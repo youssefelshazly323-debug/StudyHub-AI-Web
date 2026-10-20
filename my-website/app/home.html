@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study dashboard — StudyHub AI</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="app-brand" href="home.html"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
+      <nav class="side-nav">
+        <a class="active" href="home.html"><span class="nav-icon">⌂</span><span>Home</span></a>
+        <a href="profile.html"><span class="nav-icon">ⓘ</span><span>About</span></a>
+        <a href="files.html"><span class="nav-icon">▢</span><span>Files</span></a>
+        <a href="todo.html"><span class="nav-icon">☷</span><span>To-Do</span></a>
+        <a href="schedule.html"><span class="nav-icon">▦</span><span>Schedule</span></a>
+        <a href="chat.html"><span class="nav-icon">◌</span><span>Chat</span></a>
+        <a href="../contact.html"><span class="nav-icon">▣</span><span>Contact</span></a>
+      </nav>
+      <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
+    </aside>
+    <main class="app-main">
+      <header class="page-head">
+        <div><h1>Good morning, Naledi 👋</h1><p>Thursday, 24 September · You're on track this week.</p></div>
+        <div class="head-actions"><label class="button" for="upload">Upload file</label><input id="upload" type="file" hidden /><a class="button primary" href="summary.html">Create AI summary</a></div>
+      </header>
+      <section class="metrics">
+        <div class="metric"><span>Study streak</span><strong>12 days</strong><small>Personal best: 18</small></div>
+        <div class="metric"><span>Tasks complete</span><strong>18 / 24</strong><small>75% this week</small></div>
+        <div class="metric"><span>Focus time</span><strong>9h 40m</strong><small>+1h 20m vs last week</small></div>
+        <div class="metric"><span>Files summarised</span><strong>7</strong><small>3 courses covered</small></div>
+      </section>
+      <section class="dashboard-grid">
+        <div class="stack">
+          <article class="panel" style="min-height:195px">
+            <h2>Tasks due</h2>
+            <div class="task-preview">
+              <div><span><strong>Economics essay outline</strong><br /><small class="muted">Today · 16:00</small></span><span class="tag">High</span></div>
+              <div><span><strong>BIO201 quiz revision</strong><br /><small class="muted">Tomorrow · 09:00</small></span><span class="tag">Medium</span></div>
+              <div><span><strong>Statistics problem set</strong><br /><small class="muted">Fri · 18:00</small></span><span class="tag">High</span></div>
+            </div>
+          </article>
+          <article class="panel" style="min-height:337px">
+            <h2>Study progress</h2>
+            <p>Economics 201 <small style="float:right">72%</small></p><div class="progress-line"><span style="width:42%"></span></div>
+            <p>Biology 201 <small style="float:right">58%</small></p><div class="progress-line"><span style="width:34%"></span></div>
+            <p>Statistics 101 <small style="float:right">84%</small></p><div class="progress-line"><span style="width:49%"></span></div>
+          </article>
+        </div>
+        <div class="stack">
+          <article class="panel" style="min-height:124px">
+            <h2>Upcoming lectures</h2>
+            <div class="text-list muted"><span>10:00 · ECO201 · Leslie Social Science 1B</span><span>13:00 · STA1000 · Menzies 9</span><span>Tomorrow 09:00 · BIO201 · RW James</span></div>
+          </article>
+          <article class="panel">
+            <h2>Recent files</h2>
+            <div class="text-list muted"><a href="summary.html">Market Structures — Lecture 8.pdf</a><span>Cell Respiration Notes.docx</span><span>Probability Tutorial 4.pdf</span></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
