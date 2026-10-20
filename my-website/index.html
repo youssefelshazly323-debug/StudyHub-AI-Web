@@ -388,6 +388,225 @@
           padding: 0 20px 36px;
         }
       }
+      :root {
+        --blue: #3262ad;
+        --blue-dark: #244d91;
+        --purple: #9680cb;
+        --bg: #f3f5fa;
+        --panel-soft: #f3f5fa;
+        --text: #3262ad;
+        --muted: #7896c6;
+        --border: #9ab4e8;
+      }
+      body {
+        color: var(--blue);
+        line-height: 1.45;
+      }
+      .topnav {
+        height: 57px;
+        padding: 0 48px;
+        border: 0;
+      }
+      .brand {
+        color: var(--blue);
+        font-size: 16px;
+      }
+      .logo-box {
+        width: 29px;
+        height: 29px;
+        border-radius: 9px;
+        font-size: 14px;
+      }
+      nav {
+        gap: 24px;
+        margin-left: auto;
+        margin-right: 22px;
+      }
+      nav a {
+        font-size: 11px;
+        color: var(--purple);
+      }
+      .actions {
+        gap: 20px;
+      }
+      .btn {
+        min-height: 31px;
+        padding: 7px 13px;
+        border-radius: 8px;
+        border-color: var(--blue);
+        font-size: 11px;
+      }
+      .btn-primary {
+        background: var(--blue);
+      }
+      .btn-primary:hover {
+        background: var(--blue-dark);
+      }
+      .btn-outline {
+        color: var(--blue);
+      }
+      .hero {
+        min-height: 352px;
+        padding: 40px 5% 32px;
+        grid-template-columns: 1.14fr 1fr;
+        gap: 52px;
+        background: var(--bg);
+      }
+      .eyebrow {
+        margin-bottom: 12px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font-size: 10px;
+        letter-spacing: 0;
+      }
+      .hero h1 {
+        max-width: 510px;
+        margin-bottom: 14px;
+        color: var(--blue);
+        font-size: clamp(2.25rem, 3.6vw, 2.7rem);
+        line-height: 1.08;
+      }
+      .hero p {
+        max-width: 490px;
+        margin-bottom: 14px;
+        font-size: 11px;
+      }
+      .hero-actions {
+        gap: 9px;
+        margin-bottom: 12px;
+      }
+      .trust {
+        font-size: 10px !important;
+      }
+      .hero-visual {
+        min-height: 271px;
+        border: 0;
+        border-radius: 18px;
+        background: var(--blue);
+      }
+      .hero-visual::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 42%;
+        height: 38px;
+        background: url("assets/images/study-plan-reference.png") center / cover;
+      }
+      .session-card {
+        left: 0;
+        top: 38px;
+        width: 52%;
+        height: calc(100% - 38px);
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        color: var(--blue);
+      }
+      .session-card h3 {
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+      .session-card p {
+        margin-bottom: 9px;
+        font-size: 10px;
+      }
+      .session-list {
+        gap: 7px;
+      }
+      .session-list li {
+        gap: 8px;
+        color: var(--blue);
+        font-size: 10px;
+        font-weight: 400;
+      }
+      .session-list li::before {
+        width: 13px;
+        height: 13px;
+        border: 1.5px solid var(--blue);
+        background: white;
+        color: var(--blue);
+        font-size: 9px;
+      }
+      .section-block {
+        padding: 24px 5% 23px;
+        background: #fff;
+      }
+      .section-header,
+      .stats,
+      .steps,
+      footer {
+        display: none;
+      }
+      .feature-row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .feature-card {
+        min-height: 112px;
+        padding: 13px 14px;
+        border-color: #8eabe2;
+        border-radius: 13px;
+        box-shadow: 0 7px 14px rgba(43, 68, 119, .08);
+      }
+      .feature-card .icon {
+        margin-bottom: 2px;
+        font-size: 14px;
+        filter: grayscale(1);
+      }
+      .feature-card h3 {
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+      .feature-card p {
+        font-size: 11px;
+      }
+      .cta-band {
+        min-height: 199px;
+        margin: 0;
+        padding: 25px 5%;
+        justify-content: flex-end;
+        align-items: center;
+        border-radius: 0;
+      }
+      .cta-band > div {
+        display: none;
+      }
+      .cta-band .btn {
+        color: var(--blue);
+        background: white;
+      }
+      @media (max-width: 700px) {
+        .topnav {
+          height: auto;
+          min-height: 57px;
+          padding: 12px 18px;
+        }
+        nav {
+          order: 3;
+          width: 100%;
+          margin: 0;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 22px;
+          padding: 30px 20px;
+        }
+        .hero-visual {
+          min-height: 235px;
+        }
+        .section-block {
+          padding: 20px;
+        }
+        .feature-row {
+          grid-template-columns: 1fr;
+        }
+        .cta-band {
+          min-height: 110px;
+          padding: 20px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -400,7 +619,6 @@
         <a href="about.html">About</a>
         <a href="fees.html">Fees</a>
         <a href="contact.html">Contact</a>
-        <a href="individual.html">Individual</a>
       </nav>
       <div class="actions">
         <a class="btn btn-outline" href="signup.html?tab=login">Log in</a>
@@ -411,21 +629,20 @@
     <main>
       <section class="hero">
         <div>
-          <span class="eyebrow">Study smarter</span>
-          <h1>Get your semester under control.</h1>
+          <span class="eyebrow">Study smarter, Mzansi</span>
+          <h1>Your AI study partner, built for student life.</h1>
           <p>
-            StudyHub keeps your notes, tasks and deadlines in one place, so you
-            can stop juggling tabs and just work out what matters next.
+            Turn lecture notes into clear summaries, focused tasks and confident
+            answers — all in one calm workspace made for South African students.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="signup.html?tab=signup"
-              >Create a free account</a
+              >Start studying free</a
             >
-            <a class="btn btn-outline" href="fees.html">See pricing</a>
+            <a class="btn btn-outline" href="#features">See how it works</a>
           </div>
           <p class="trust">
-            Built for students who want a bit more structure and a lot less
-            stress.
+            Trusted by 8,000+ students across UCT, Wits, UP and Stellenbosch
           </p>
         </div>
 
@@ -442,109 +659,34 @@
         </div>
       </section>
 
-      <section class="section-block">
-        <div class="stats">
-          <div class="stat-box">
-            <strong>12k+</strong>
-            <span>study summaries created</span>
-          </div>
-          <div class="stat-box">
-            <strong>94%</strong>
-            <span>students feel more organised</span>
-          </div>
-          <div class="stat-box">
-            <strong>5 min</strong>
-            <span>average time to plan a week</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <div class="section-header">
-          <h2>Everything students actually need</h2>
-          <p>
-            StudyHub brings your lectures, notes and study tasks together in one
-            place so you can spend less time organising and more time learning.
-          </p>
-        </div>
-
+      <section class="section-block" id="features">
         <div class="feature-row">
           <article class="feature-card">
             <div class="icon">🧠</div>
             <h3>AI summaries</h3>
             <p>
-              Turn messy lecture notes into clear revision points without
-              rewriting everything by hand.
+              Clear notes in seconds. Stay organised without losing your flow.
             </p>
           </article>
           <article class="feature-card">
             <div class="icon">📅</div>
-            <h3>Weekly planning</h3>
+            <h3>Plan your week</h3>
             <p>
-              Keep your deadlines, lectures and tasks in one place so it is
-              easier to stay on track.
+              Tasks and lectures together. Stay organised without losing your flow.
             </p>
           </article>
           <article class="feature-card">
             <div class="icon">📄</div>
-            <h3>File Q&A</h3>
+            <h3>Ask your files</h3>
             <p>
-              Ask questions about your uploaded notes and get answers based on
-              the material you already have.
-            </p>
-          </article>
-          <article class="feature-card">
-            <div class="icon">🎯</div>
-            <h3>Focused study</h3>
-            <p>
-              Set up study sessions around the topics that actually matter
-              before a test or exam.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <div class="section-header">
-          <h2>How it works</h2>
-        </div>
-        <div class="steps">
-          <article class="step-card">
-            <div class="step-number">1</div>
-            <h3>Upload your notes</h3>
-            <p>
-              Drop in lecture slides, class notes or readings from whatever
-              modules you are working on.
-            </p>
-          </article>
-          <article class="step-card">
-            <div class="step-number">2</div>
-            <h3>Build a plan</h3>
-            <p>
-              StudyHub turns that content into summaries, tasks and a more
-              realistic study routine.
-            </p>
-          </article>
-          <article class="step-card">
-            <div class="step-number">3</div>
-            <h3>Study with more clarity</h3>
-            <p>
-              Use quick answers, weekly tasks and simple guidance to keep moving
-              without the panic of a looming deadline.
+              Answers grounded in your work. Stay organised without losing your flow.
             </p>
           </article>
         </div>
       </section>
 
       <section class="cta-band">
-        <div>
-          <h3>Ready to get on top of things?</h3>
-          <p>
-            Set up a study routine that actually feels manageable, instead of
-            one more thing to keep track of.
-          </p>
-        </div>
-        <a class="btn btn-outline" href="contact.html">Talk to us</a>
+        <a class="btn btn-outline" href="signup.html?tab=signup">Create your free workspace</a>
       </section>
     </main>
 
