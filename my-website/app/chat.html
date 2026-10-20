@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study chat — StudyHub AI</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="app-brand" href="home.html"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
+      <nav class="side-nav">
+        <a href="home.html"><span class="nav-icon">⌂</span><span>Home</span></a><a href="profile.html"><span class="nav-icon">ⓘ</span><span>About</span></a>
+        <a href="files.html"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html"><span class="nav-icon">☷</span><span>To-Do</span></a>
+        <a href="schedule.html"><span class="nav-icon">▦</span><span>Schedule</span></a><a class="active" href="chat.html"><span class="nav-icon">◌</span><span>Chat</span></a>
+        <a href="../contact.html"><span class="nav-icon">▣</span><span>Contact</span></a>
+      </nav>
+      <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
+    </aside>
+    <main class="app-main">
+      <header class="page-head"><div><h1>Study chat</h1><p>Grounded in 3 selected files · ECO201</p></div><button>New chat</button></header>
+      <section class="chat-layout">
+        <article class="panel chat-window">
+          <div class="messages" id="messages">
+            <div class="message"><strong>StudyHub AI</strong>Hi Naledi — I’m ready to help with Economics 201. What would you like to unpack?</div>
+            <div class="message user">Can you explain why oligopolies are strategically interdependent, using a South African example?</div>
+            <div class="message"><strong>StudyHub AI</strong>In an oligopoly, only a few large firms serve the market, so each firm’s decisions affect the others. If one changes price, output or advertising, rivals must decide how to respond.<br /><br />A useful example is South African mobile networks: a data-price change by one major network can prompt competing offers from others. Each firm anticipates those reactions before acting.<br /><br /><small>Lecture 8 · p.14 &nbsp;&nbsp; Chapter 9 · p.203</small></div>
+          </div>
+          <form class="chat-compose" id="chat-form"><input id="chat-input" placeholder="Ask about your selected files..." /><button class="primary" type="submit">Send</button></form>
+        </article>
+        <aside class="panel"><h2>Sources</h2><div class="field"><label>Search uploaded files</label><input placeholder="Search files..." /></div><p>Selected references</p><div class="text-list"><span><span class="tag" style="background:var(--purple);color:white">✓</span> &nbsp; Market Structures — Lecture 8.pdf</span><span><span class="tag" style="background:var(--purple);color:white">✓</span> &nbsp; Economics 201 Textbook.pdf</span><span><span class="tag" style="background:var(--purple);color:white">✓</span> &nbsp; Tutorial 6 Memo.docx</span></div><p>Answers include citations. StudyHub may make mistakes — check important details.</p></aside>
+      </section>
+    </main>
+    <script>
+      document.getElementById("chat-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const input = document.getElementById("chat-input");
+        const value = input.value.trim();
+        if (!value) return;
+        const message = document.createElement("div");
+        message.className = "message user";
+        message.textContent = value;
+        document.getElementById("messages").append(message);
+        input.value = "";
+      });
+    </script>
+  </body>
+</html>
