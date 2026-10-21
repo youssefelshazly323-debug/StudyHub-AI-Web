@@ -33,6 +33,7 @@
   },
   "scripts": {
     "start": "expo start",
+    "chat": "node server.js",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
