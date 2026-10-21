@@ -517,6 +517,7 @@ img.avatar {
   align-content: start;
   gap: 10px;
   flex: 1;
+  overflow-y: auto;
 }
 
 .message {
@@ -525,6 +526,7 @@ img.avatar {
   border-radius: 12px;
   background: #f3f5fa;
   color: var(--muted);
+  white-space: pre-wrap;
 }
 
 .message.user {
