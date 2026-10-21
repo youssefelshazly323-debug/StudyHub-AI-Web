@@ -18,30 +18,95 @@
       <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
     </aside>
     <main class="app-main">
-      <header class="page-head"><div><h1>Study chat</h1><p>Grounded in 3 selected files · ECO201</p></div><button>New chat</button></header>
+      <header class="page-head"><div><h1>Study chat</h1><p>Ask a question and get an AI-powered explanation.</p></div><button id="new-chat" type="button">New chat</button></header>
       <section class="chat-layout">
         <article class="panel chat-window">
-          <div class="messages" id="messages">
-            <div class="message"><strong>StudyHub AI</strong>Hi Naledi — I’m ready to help with Economics 201. What would you like to unpack?</div>
-            <div class="message user">Can you explain why oligopolies are strategically interdependent, using a South African example?</div>
-            <div class="message"><strong>StudyHub AI</strong>In an oligopoly, only a few large firms serve the market, so each firm’s decisions affect the others. If one changes price, output or advertising, rivals must decide how to respond.<br /><br />A useful example is South African mobile networks: a data-price change by one major network can prompt competing offers from others. Each firm anticipates those reactions before acting.<br /><br /><small>Lecture 8 · p.14 &nbsp;&nbsp; Chapter 9 · p.203</small></div>
+          <div class="messages" id="messages" aria-live="polite">
+            <div class="message"><strong>StudyHub AI · Offline demo</strong>Hi Naledi — ask me a question. A few built-in study examples work without an API key; other questions get a setup hint.</div>
           </div>
-          <form class="chat-compose" id="chat-form"><input id="chat-input" placeholder="Ask about your selected files..." /><button class="primary" type="submit">Send</button></form>
+          <form class="chat-compose" id="chat-form"><input id="chat-input" aria-label="Your question" placeholder="Ask a study question..." autocomplete="off" /><button class="primary" id="send-button" type="submit">Send</button></form>
         </article>
-        <aside class="panel"><h2>Sources</h2><div class="field"><label>Search uploaded files</label><input placeholder="Search files..." /></div><p>Selected references</p><div class="text-list"><span><span class="tag" style="background:var(--purple);color:white">✓</span> &nbsp; Market Structures — Lecture 8.pdf</span><span><span class="tag" style="background:var(--purple);color:white">✓</span> &nbsp; Economics 201 Textbook.pdf</span><span><span class="tag" style="background:var(--purple);color:white">✓</span> &nbsp; Tutorial 6 Memo.docx</span></div><p>Answers include citations. StudyHub may make mistakes — check important details.</p></aside>
+        <aside class="panel"><h2>Study help</h2><p>Offline demo mode is active. A few built-in examples work without an API key; other questions get a setup hint.</p><p>For real AI answers, add your OpenAI key to the local .env file and restart the chat server.</p><p>File uploads and citations aren’t connected yet.</p></aside>
       </section>
     </main>
     <script>
-      document.getElementById("chat-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const input = document.getElementById("chat-input");
-        const value = input.value.trim();
-        if (!value) return;
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("chat-input");
+      const sendButton = document.getElementById("send-button");
+      const newChatButton = document.getElementById("new-chat");
+      const messagesElement = document.getElementById("messages");
+      const conversation = [];
+      let demoMode = true;
+
+      function addMessage(role, text, isStatus = false) {
         const message = document.createElement("div");
-        message.className = "message user";
-        message.textContent = value;
-        document.getElementById("messages").append(message);
+        message.className = role === "user" ? "message user" : "message";
+        if (isStatus) message.setAttribute("role", "status");
+        if (role !== "user") {
+          const label = document.createElement("strong");
+          label.textContent = demoMode ? "StudyHub AI · Offline demo" : "StudyHub AI";
+          message.append(label);
+        }
+        message.append(document.createTextNode(text));
+        messagesElement.append(message);
+        messagesElement.scrollTop = messagesElement.scrollHeight;
+        return message;
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const question = input.value.trim();
+        if (!question || sendButton.disabled) return;
+
+        conversation.push({ role: "user", content: question });
+        addMessage("user", question);
         input.value = "";
+        input.disabled = true;
+        sendButton.disabled = true;
+        newChatButton.disabled = true;
+        const status = addMessage("assistant", "Thinking…", true);
+
+        try {
+          const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: conversation.slice(-20) }),
+          });
+          const responseText = await response.text();
+          let result;
+          try {
+            result = JSON.parse(responseText);
+          } catch {
+            throw new Error(
+              "The chat server isn’t running. In the my-website folder, run `npm run chat`, then open http://localhost:3000/app/chat.html.",
+            );
+          }
+          if (!response.ok) throw new Error(result.error || "The chat request failed.");
+          if (typeof result.answer !== "string" || !result.answer.trim()) {
+            throw new Error("The chat server returned an empty answer. Please try again.");
+          }
+
+          demoMode = result.demo === true;
+          conversation.push({ role: "assistant", content: result.answer });
+          status.remove();
+          addMessage("assistant", result.answer);
+        } catch (error) {
+          status.remove();
+          addMessage("assistant", error.message || "Could not get an answer. Please try again.");
+        } finally {
+          input.disabled = false;
+          sendButton.disabled = false;
+          newChatButton.disabled = false;
+          input.focus();
+        }
+      });
+
+      newChatButton.addEventListener("click", () => {
+        conversation.length = 0;
+        demoMode = true;
+        messagesElement.replaceChildren();
+        addMessage("assistant", "Hi Naledi — ask me a question. A few built-in study examples work without an API key; other questions get a setup hint.");
+        input.focus();
       });
     </script>
   </body>
