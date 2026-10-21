@@ -40,7 +40,13 @@ studyhub-web/
 
 The website includes a basic to-do list, task filters, chat, FAQ, login/sign-up pages, study files, schedule, and AI summary pages.
 
-Some features are currently using demo data and are not connected to a backend.
+Most features use demo data and are not connected to a backend. The chat has limited offline demo replies and can use OpenAI for real answers when run through the local chat server:
+
+1. Use Node.js 20.6 or newer.
+2. Copy `.env.example` to `.env` and set `OPENAI_API_KEY` to your OpenAI API key.
+3. Run `npm run chat` from this folder and open `http://localhost:3000/app/chat.html`.
+
+The API key stays on the server and must not be added to browser code or committed. File uploads and citations are not connected to the chat yet.
 
 ## Future Plans
 
