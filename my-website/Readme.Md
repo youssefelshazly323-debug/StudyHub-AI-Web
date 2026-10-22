@@ -61,3 +61,6 @@ I plan to add real user accounts, a database, PDF uploads, working AI features, 
 ## About
 
 I created StudyHub AI as a project to make it easier for students to manage their study work in one place. The website is still a work in progress.
+
+## Youtube Video Link
+(https://youtu.be/aVfj2vlHIsE)
