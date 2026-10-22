@@ -8,20 +8,21 @@
   </head>
   <body>
     <aside class="sidebar">
-      <a class="app-brand" href="home.html"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
+      <a class="app-brand" href="home.html" aria-label="StudyHub AI dashboard"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
       <nav class="side-nav">
-        <a href="home.html"><span class="nav-icon">⌂</span><span>Home</span></a><a href="profile.html"><span class="nav-icon">ⓘ</span><span>About</span></a>
-        <a class="active" href="files.html"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html"><span class="nav-icon">☷</span><span>To-Do</span></a>
-        <a href="schedule.html"><span class="nav-icon">▦</span><span>Schedule</span></a><a href="chat.html"><span class="nav-icon">◌</span><span>Chat</span></a>
-        <a href="../contact.html"><span class="nav-icon">▣</span><span>Contact</span></a>
+        <a href="home.html" aria-label="Home"><span class="nav-icon">⌂</span><span>Home</span></a><a href="profile.html" aria-label="About"><span class="nav-icon">ⓘ</span><span>About</span></a>
+        <a class="active" href="files.html" aria-label="Files"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html" aria-label="To-Do"><span class="nav-icon">☷</span><span>To-Do</span></a>
+        <a href="schedule.html" aria-label="Schedule"><span class="nav-icon">▦</span><span>Schedule</span></a><a href="chat.html" aria-label="Chat"><span class="nav-icon">◌</span><span>Chat</span></a>
+        <a href="../contact.html" aria-label="Contact"><span class="nav-icon">▣</span><span>Contact</span></a>
       </nav>
-      <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
+      <a class="account-chip" href="profile.html" aria-label="Naledi Mokoena settings"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
     </aside>
     <main class="app-main">
       <header class="page-head">
         <div><h1>AI Summary</h1><p>Market Structures — Lecture 8.pdf · Economics 201</p></div>
-        <div class="head-actions"><button>Copy</button><button class="primary">Export</button><button>Make flashcards</button></div>
+        <div class="head-actions"><button id="copy-summary" type="button">Copy</button><button class="primary" id="export-summary" type="button">Export</button><button type="button" disabled title="Flashcard generation is not connected in this demo">Make flashcards</button></div>
       </header>
+      <p class="muted" id="summary-status" role="status" aria-live="polite">Copy and export work locally; flashcard generation is not connected.</p>
       <section class="split">
         <article class="panel">
           <div style="display:flex;justify-content:space-between;margin-bottom:9px"><span class="tag">PDF · 24 pages</span><span class="purple">Page 8 / 24</span></div>
@@ -40,5 +41,32 @@
         </div>
       </section>
     </main>
+    <script>
+      const summaryText = document
+        .querySelector(".summary-stack .panel p")
+        .textContent.trim();
+      const summaryStatus = document.getElementById("summary-status");
+
+      document.getElementById("copy-summary").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(summaryText);
+          summaryStatus.textContent = "Summary copied to the clipboard.";
+        } catch {
+          summaryStatus.textContent =
+            "Could not copy the summary. Check clipboard permissions and try again.";
+        }
+      });
+
+      document.getElementById("export-summary").addEventListener("click", () => {
+        const file = new Blob([summaryText], { type: "text/plain;charset=utf-8" });
+        const downloadUrl = URL.createObjectURL(file);
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = "studyhub-summary.txt";
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+        summaryStatus.textContent = "Requested a text file download; check your browser's downloads.";
+      });
+    </script>
   </body>
 </html>

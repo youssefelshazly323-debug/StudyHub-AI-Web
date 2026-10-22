@@ -150,6 +150,14 @@
         color: #fff;
         border-color: var(--blue);
       }
+      .auth-status {
+        margin: -14px 0 20px;
+        color: #9b1c1c;
+        font-size: 13px;
+      }
+      .auth-status[hidden] {
+        display: none;
+      }
       .auth-panel h1 {
         font-size: 26px;
         margin-bottom: 6px;
@@ -363,60 +371,53 @@
 
       <div class="auth-panel">
         <div class="auth-tabs">
-          <button id="tab-signup" class="active" onclick="switchTab('signup')">
+          <button id="tab-signup" class="active" type="button" aria-selected="true" aria-controls="form-signup" onclick="switchTab('signup')">
             Create account
           </button>
-          <button id="tab-login" onclick="switchTab('login')">Log in</button>
+          <button id="tab-login" type="button" aria-selected="false" aria-controls="form-login" onclick="switchTab('login')">Log in</button>
         </div>
+        <p class="auth-status" id="auth-status" role="status" aria-live="polite" hidden></p>
 
         <!-- SIGN UP FORM -->
         <div id="form-signup">
           <h1>Create your StudyHub account</h1>
           <p class="sub">Start free. No card needed.</p>
-          <button
-            class="btn btn-outline google-button"
-            type="button"
-          >
+          <button class="btn btn-outline google-button" type="button">
             🔍 Continue with Google
           </button>
           <div class="divider">or with email</div>
-          <form
-            onsubmit="
-              event.preventDefault();
-              window.location.href = 'app/home.html';
-            "
-          >
+          <form id="signup-form">
             <div class="form-row">
               <div class="field">
-                <label>First name</label
-                ><input type="text" placeholder="Naledi" />
+                <label for="signup-first-name">First name</label
+                ><input id="signup-first-name" name="firstName" type="text" autocomplete="given-name" placeholder="Naledi" required />
               </div>
               <div class="field">
-                <label>Last name</label
-                ><input type="text" placeholder="Mokoena" />
+                <label for="signup-last-name">Last name</label
+                ><input id="signup-last-name" name="lastName" type="text" autocomplete="family-name" placeholder="Mokoena" required />
               </div>
             </div>
             <div class="field">
-              <label>University email</label
-              ><input type="email" placeholder="naledi@myuct.ac.za" />
+              <label for="signup-email">University email</label
+              ><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="naledi@myuct.ac.za" required />
             </div>
             <div class="field">
-              <label>Password</label
-              ><input type="password" placeholder="••••••••••••" />
+              <label for="signup-password">Password</label
+              ><input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" pattern="(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}" title="Use at least 8 characters, including a number and a symbol." placeholder="••••••••••••" required />
             </div>
             <p class="hint">Use 8+ characters with a number and symbol.</p>
             <div class="field">
-              <label>University</label
-              ><input type="text" placeholder="University of Cape Town" />
+              <label for="signup-university">University</label
+              ><input id="signup-university" name="university" type="text" autocomplete="organization" placeholder="University of Cape Town" required />
             </div>
             <button class="btn btn-primary auth-submit" type="submit">
               Create free account
             </button>
           </form>
           <p class="legal">
-            By creating an account, you agree to the <a href="#">Terms</a> and
-            <a href="#">Privacy Policy</a>. Already have an account?
-            <a href="#" onclick="switchTab('login')">Log in.</a>
+            Account creation is not connected yet, so this demo does not save
+            your details. Already have an account?
+            <a href="?tab=login">Log in.</a>
           </p>
         </div>
 
@@ -424,26 +425,18 @@
         <div id="form-login" style="display: none">
           <h1>Welcome back</h1>
           <p class="sub">Jump back in and continue from where you left off.</p>
-          <button
-            class="btn btn-outline google-button"
-            type="button"
-          >
+          <button class="btn btn-outline google-button" type="button">
             🔍 Continue with Google
           </button>
           <div class="divider">or with email</div>
-          <form
-            onsubmit="
-              event.preventDefault();
-              window.location.href = 'app/home.html';
-            "
-          >
+          <form id="login-form">
             <div class="field">
-              <label>University email</label
-              ><input type="email" placeholder="naledi@myuct.ac.za" />
+              <label for="login-email">University email</label
+              ><input id="login-email" name="email" type="email" autocomplete="email" placeholder="naledi@myuct.ac.za" required />
             </div>
             <div class="field">
-              <label>Password</label
-              ><input type="password" placeholder="••••••••••••" />
+              <label for="login-password">Password</label
+              ><input id="login-password" name="password" type="password" autocomplete="current-password" required />
             </div>
             <button class="btn btn-primary auth-submit" type="submit">
               Sign in
@@ -451,7 +444,7 @@
           </form>
           <p class="legal">
             Don't have an account?
-            <a href="#" onclick="switchTab('signup')">Create one free.</a>
+            <a href="?tab=signup">Create one free.</a>
           </p>
         </div>
       </div>
@@ -459,19 +452,41 @@
 
     <script>
       function switchTab(tab) {
+        const isSignup = tab === "signup";
         document
           .getElementById("tab-signup")
-          .classList.toggle("active", tab === "signup");
+          .classList.toggle("active", isSignup);
         document
           .getElementById("tab-login")
-          .classList.toggle("active", tab === "login");
+          .classList.toggle("active", !isSignup);
+        document.getElementById("tab-signup").setAttribute("aria-selected", String(isSignup));
+        document.getElementById("tab-login").setAttribute("aria-selected", String(!isSignup));
         document.getElementById("form-signup").style.display =
-          tab === "signup" ? "block" : "none";
+          isSignup ? "block" : "none";
         document.getElementById("form-login").style.display =
-          tab === "login" ? "block" : "none";
+          isSignup ? "none" : "block";
+        document.getElementById("auth-status").hidden = true;
       }
       const params = new URLSearchParams(window.location.search);
       if (params.get("tab") === "login") switchTab("login");
+
+      const authStatus = document.getElementById("auth-status");
+      const unavailableMessage =
+        "Account access is not configured yet. Your details were not sent or saved.";
+      document.querySelectorAll("#signup-form, #login-form").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          authStatus.textContent = unavailableMessage;
+          authStatus.hidden = false;
+        });
+      });
+      document.querySelectorAll(".google-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          authStatus.textContent =
+            "Google sign-in is not configured yet. No account was accessed.";
+          authStatus.hidden = false;
+        });
+      });
     </script>
   </body>
 </html>

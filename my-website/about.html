@@ -201,18 +201,22 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="site-nav.css" />
   </head>
   <body>
     <header class="topnav">
       <a class="brand" href="index.html"
         ><span class="logo-box">📖</span> StudyHub AI</a
       >
-      <nav>
-        <a href="index.html">Home</a>
-        <a class="active" href="about.html">About</a>
-        <a href="fees.html">Fees</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+      <details class="mobile-menu">
+        <summary>Menu</summary>
+        <nav aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a class="active" href="about.html">About</a>
+          <a href="fees.html">Fees</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </details>
       <div class="actions">
         <a class="btn btn-outline" href="signup.html?tab=login">Log in</a>
         <a class="btn btn-primary" href="signup.html?tab=signup">Get started</a>

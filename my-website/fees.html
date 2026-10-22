@@ -368,7 +368,10 @@
         color: var(--blue);
       }
       .calculator {
-        display: none;
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 20px;
+        align-items: start;
       }
       .note {
         margin-top: 10px;
@@ -392,23 +395,30 @@
         .pricing-grid {
           grid-template-columns: 1fr;
         }
+        .calculator {
+          grid-template-columns: minmax(0, 1fr);
+        }
         .price-card {
           min-height: 330px;
         }
       }
     </style>
+    <link rel="stylesheet" href="site-nav.css" />
   </head>
   <body>
     <header class="topnav">
       <a class="brand" href="index.html"
         ><span class="logo-box">📖</span> StudyHub AI</a
       >
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a class="active" href="fees.html">Fees</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+      <details class="mobile-menu">
+        <summary>Menu</summary>
+        <nav aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a class="active" href="fees.html">Fees</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </details>
       <div class="actions">
         <a class="btn btn-outline" href="signup.html?tab=login">Log in</a>
         <a class="btn btn-primary" href="signup.html?tab=signup">Get started</a>
@@ -418,7 +428,7 @@
     <div class="page">
       <h1 class="page-title">Simple plans for every study season</h1>
       <p class="page-subtitle">
-        Prices in South African rand. Cancel anytime. No surprise fees.
+        Example prices in South African rand. Checkout and billing are not connected.
       </p>
 
       <div class="pricing-grid">
@@ -499,7 +509,7 @@
         </div>
       </div>
 
-      <p class="note">Secure billing · Student plan includes a 7-day free trial · VAT included where applicable</p>
+      <p class="note">Demo estimate only. This website does not collect payments.</p>
     </div>
 
     <script>

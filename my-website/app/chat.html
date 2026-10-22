@@ -8,14 +8,14 @@
   </head>
   <body>
     <aside class="sidebar">
-      <a class="app-brand" href="home.html"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
+      <a class="app-brand" href="home.html" aria-label="StudyHub AI dashboard"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
       <nav class="side-nav">
-        <a href="home.html"><span class="nav-icon">⌂</span><span>Home</span></a><a href="profile.html"><span class="nav-icon">ⓘ</span><span>About</span></a>
-        <a href="files.html"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html"><span class="nav-icon">☷</span><span>To-Do</span></a>
-        <a href="schedule.html"><span class="nav-icon">▦</span><span>Schedule</span></a><a class="active" href="chat.html"><span class="nav-icon">◌</span><span>Chat</span></a>
-        <a href="../contact.html"><span class="nav-icon">▣</span><span>Contact</span></a>
+        <a href="home.html" aria-label="Home"><span class="nav-icon">⌂</span><span>Home</span></a><a href="profile.html" aria-label="About"><span class="nav-icon">ⓘ</span><span>About</span></a>
+        <a href="files.html" aria-label="Files"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html" aria-label="To-Do"><span class="nav-icon">☷</span><span>To-Do</span></a>
+        <a href="schedule.html" aria-label="Schedule"><span class="nav-icon">▦</span><span>Schedule</span></a><a class="active" href="chat.html" aria-label="Chat"><span class="nav-icon">◌</span><span>Chat</span></a>
+        <a href="../contact.html" aria-label="Contact"><span class="nav-icon">▣</span><span>Contact</span></a>
       </nav>
-      <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
+      <a class="account-chip" href="profile.html" aria-label="Naledi Mokoena settings"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
     </aside>
     <main class="app-main">
       <header class="page-head"><div><h1>Study chat</h1><p>Ask a question and get an AI-powered explanation.</p></div><button id="new-chat" type="button">New chat</button></header>
@@ -26,7 +26,7 @@
           </div>
           <form class="chat-compose" id="chat-form"><input id="chat-input" aria-label="Your question" placeholder="Ask a study question..." autocomplete="off" /><button class="primary" id="send-button" type="submit">Send</button></form>
         </article>
-        <aside class="panel"><h2>Study help</h2><p>Offline demo mode is active. A few built-in examples work without an API key; other questions get a setup hint.</p><p>For real AI answers, add your OpenAI key to the local .env file and restart the chat server.</p><p>File uploads and citations aren’t connected yet.</p></aside>
+        <aside class="panel"><h2>Study help</h2><p>Offline demo mode is active. A few built-in examples work without an API key; other questions get a setup hint.</p><p id="chat-deployment-note">For real AI answers, add your OpenAI key to the local .env file and restart the chat server.</p><p>File uploads and citations aren’t connected yet.</p></aside>
       </section>
     </main>
     <script>
@@ -37,6 +37,26 @@
       const messagesElement = document.getElementById("messages");
       const conversation = [];
       let demoMode = true;
+      const githubPagesDemo = window.location.hostname.endsWith(".github.io");
+
+      function getStaticDemoAnswer(question) {
+        const normalized = question.toLowerCase();
+        if (/photosynth|chlorophyll/.test(normalized)) {
+          return "Photosynthesis is how plants use light energy to turn carbon dioxide and water into glucose and oxygen. Chlorophyll captures the light; the glucose stores energy for the plant.";
+        }
+        if (/market structure|monopol|oligopol|perfect competition/.test(normalized)) {
+          return "Market structures describe how firms compete. Perfect competition has many firms and little pricing power; monopolistic competition adds differentiated products; oligopoly has a few interdependent firms; a monopoly has one dominant supplier and strong barriers to entry.";
+        }
+        if (/supply and demand|equilibrium/.test(normalized)) {
+          return "Market equilibrium is where quantity supplied equals quantity demanded. A price above equilibrium creates a surplus; a price below it creates a shortage. Changes in other factors shift the supply or demand curve.";
+        }
+        return "This GitHub Pages demo supports a few built-in examples: photosynthesis, market structures, and supply and demand. Live AI answers are not available on this static site.";
+      }
+
+      if (githubPagesDemo) {
+        document.getElementById("chat-deployment-note").textContent =
+          "This static GitHub Pages demo uses built-in examples only. Chat messages stay in this browser.";
+      }
 
       function addMessage(role, text, isStatus = false) {
         const message = document.createElement("div");
@@ -67,6 +87,15 @@
         const status = addMessage("assistant", "Thinking…", true);
 
         try {
+          if (githubPagesDemo) {
+            demoMode = true;
+            const answer = getStaticDemoAnswer(question);
+            conversation.push({ role: "assistant", content: answer });
+            status.remove();
+            addMessage("assistant", answer);
+            return;
+          }
+
           const response = await fetch("/api/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -78,7 +107,7 @@
             result = JSON.parse(responseText);
           } catch {
             throw new Error(
-              "The chat server isn’t running. In the my-website folder, run `npm run chat`, then open http://localhost:3000/app/chat.html.",
+              "The chat server isn’t running. In the my-website folder, run `npm run chat`, then open http://127.0.0.1:3000/app/chat.html.",
             );
           }
           if (!response.ok) throw new Error(result.error || "The chat request failed.");

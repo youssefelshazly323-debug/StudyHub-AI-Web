@@ -141,7 +141,21 @@
       .faq-item {
         padding: 18px 22px;
         margin-bottom: 12px;
+      }
+      .faq-item summary {
         cursor: pointer;
+        list-style: none;
+      }
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq-item summary::after {
+        content: "+";
+        color: var(--blue);
+        font-weight: 700;
+      }
+      .faq-item[open] summary::after {
+        content: "−";
       }
       .faq-q {
         display: flex;
@@ -149,13 +163,9 @@
         gap: 12px;
         font-weight: 700;
       }
-      .faq-a {
-        display: none;
+      .faq-item .faq-a {
         margin-top: 10px;
         color: var(--muted);
-      }
-      .faq-item.open .faq-a {
-        display: block;
       }
       .contact-form-card {
         padding: 28px;
@@ -371,18 +381,22 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="site-nav.css" />
   </head>
   <body>
     <header class="topnav">
       <a class="brand" href="index.html"
         ><span class="logo-box">📖</span> StudyHub AI</a
       >
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="fees.html">Fees</a>
-        <a class="active" href="contact.html">Contact</a>
-      </nav>
+      <details class="mobile-menu">
+        <summary>Menu</summary>
+        <nav aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="fees.html">Fees</a>
+          <a class="active" href="contact.html">Contact</a>
+        </nav>
+      </details>
       <div class="actions">
         <a class="btn btn-outline" href="signup.html?tab=login">Log in</a>
         <a class="btn btn-primary" href="signup.html?tab=signup">Get started</a>
@@ -407,62 +421,52 @@
           </div>
 
           <h3 class="quick-title">Quick answers</h3>
-          <div class="faq-item open" onclick="this.classList.toggle('open')">
-            <div class="faq-q">
-              <span>Can I cancel my plan anytime?</span><span>–</span>
-            </div>
+          <details class="faq-item" open>
+            <summary class="faq-q">Can I cancel my plan anytime?</summary>
             <div class="faq-a">
               Yes. Your plan stays active until the end of the current billing
               cycle, so you are not charged in the middle of a month.
             </div>
-          </div>
-          <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">
-              <span>Does StudyHub use my notes to train the system?</span
-              ><span>+</span>
-            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              Does StudyHub use my notes to train the system?
+            </summary>
             <div class="faq-a">
               No. Your uploaded files are not used to train our models by
               default unless you choose to opt in.
             </div>
-          </div>
-          <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">
-              <span>Can my study group share files?</span><span>+</span>
-            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">Can my study group share files?</summary>
             <div class="faq-a">
               Yes. The group plan includes shared spaces and 50GB of storage so
               everyone can keep the same study material in one place.
             </div>
-          </div>
+          </details>
         </div>
 
         <div class="contact-form-card">
           <h2>Send us a message</h2>
-          <form
-            onsubmit="
-              event.preventDefault();
-              alert('Message sent! (demo only)');
-            "
-          >
+          <form id="contact-form">
             <div class="form-row">
               <div class="field">
-                <label>First name</label>
-                <input type="text" placeholder="Naledi" />
+                <label for="first-name">First name</label>
+                <input id="first-name" name="firstName" type="text" autocomplete="given-name" placeholder="Naledi" required />
               </div>
               <div class="field">
-                <label>Last name</label>
-                <input type="text" placeholder="Mokoena" />
+                <label for="last-name">Last name</label>
+                <input id="last-name" name="lastName" type="text" autocomplete="family-name" placeholder="Mokoena" required />
               </div>
             </div>
             <div class="field">
-              <label>Email</label>
-              <input type="email" placeholder="naledi@myuct.ac.za" />
+              <label for="contact-email">Email</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="naledi@myuct.ac.za" required />
             </div>
             <div class="field">
-              <label>Topic</label>
-              <select>
-                <option>Choose a topic</option>
+              <label for="contact-topic">Topic</label>
+              <select id="contact-topic" name="topic" required>
+                <option value="" selected disabled>Choose a topic</option>
                 <option>Billing</option>
                 <option>Technical support</option>
                 <option>Campus rollout</option>
@@ -470,16 +474,32 @@
               </select>
             </div>
             <div class="field">
-              <label>Message</label>
-              <textarea placeholder="Tell us how we can help..."></textarea>
+              <label for="contact-message">Message</label>
+              <textarea id="contact-message" name="message" placeholder="Tell us how we can help..." required></textarea>
             </div>
             <button class="btn btn-primary" type="submit">Send message</button>
-            <p class="form-note">
-              By submitting, you agree to our privacy policy.
+            <p class="form-note" id="contact-status" role="status" aria-live="polite">
+              This demo opens a pre-filled email draft. Your message is not sent by this website.
             </p>
           </form>
         </div>
       </div>
     </div>
+    <script>
+      const contactForm = document.getElementById("contact-form");
+      const contactStatus = document.getElementById("contact-status");
+
+      contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!contactForm.reportValidity()) return;
+
+        const formData = new FormData(contactForm);
+        const subject = `${formData.get("topic")} enquiry from ${formData.get("firstName")} ${formData.get("lastName")}`;
+        const body = `Name: ${formData.get("firstName")} ${formData.get("lastName")}\nEmail: ${formData.get("email")}\n\n${formData.get("message")}`;
+        contactStatus.textContent =
+          "Your email app should open a draft. Review and send it there; nothing has been sent yet.";
+        window.location.href = `mailto:hello@studyhub.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+    </script>
   </body>
 </html>

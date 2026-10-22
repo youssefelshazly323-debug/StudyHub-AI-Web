@@ -8,21 +8,22 @@
   </head>
   <body>
     <aside class="sidebar">
-      <a class="app-brand" href="home.html"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
+      <a class="app-brand" href="home.html" aria-label="StudyHub AI dashboard"><span class="app-logo">◫</span><span>StudyHub AI</span></a>
       <nav class="side-nav">
-        <a href="home.html"><span class="nav-icon">⌂</span><span>Home</span></a><a class="active" href="profile.html"><span class="nav-icon">ⓘ</span><span>About</span></a>
-        <a href="files.html"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html"><span class="nav-icon">☷</span><span>To-Do</span></a>
-        <a href="schedule.html"><span class="nav-icon">▦</span><span>Schedule</span></a><a href="chat.html"><span class="nav-icon">◌</span><span>Chat</span></a>
-        <a href="../contact.html"><span class="nav-icon">▣</span><span>Contact</span></a>
+        <a href="home.html" aria-label="Home"><span class="nav-icon">⌂</span><span>Home</span></a><a class="active" href="profile.html" aria-label="About"><span class="nav-icon">ⓘ</span><span>About</span></a>
+        <a href="files.html" aria-label="Files"><span class="nav-icon">▢</span><span>Files</span></a><a href="todo.html" aria-label="To-Do"><span class="nav-icon">☷</span><span>To-Do</span></a>
+        <a href="schedule.html" aria-label="Schedule"><span class="nav-icon">▦</span><span>Schedule</span></a><a href="chat.html" aria-label="Chat"><span class="nav-icon">◌</span><span>Chat</span></a>
+        <a href="../contact.html" aria-label="Contact"><span class="nav-icon">▣</span><span>Contact</span></a>
       </nav>
-      <a class="account-chip" href="profile.html"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
+      <a class="account-chip" href="profile.html" aria-label="Naledi Mokoena settings"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="" /><span>Naledi Mokoena<small>Student plan · Settings</small></span></a>
     </aside>
     <main class="app-main">
-      <header class="page-head"><div><h1>Profile &amp; settings</h1><p>Manage your details, preferences and plan.</p></div><div class="head-actions"><button>Discard</button><button class="primary">Save changes</button></div></header>
+      <header class="page-head"><div><h1>Profile &amp; settings</h1><p>Demo profile data is not connected to an account.</p></div><div class="head-actions"><button id="discard-profile" type="button">Discard</button><button class="primary" id="save-profile" type="button">Save changes</button></div></header>
+      <p class="muted" id="profile-status" role="status" aria-live="polite"></p>
       <section class="settings-grid">
         <div class="stack">
           <article class="panel">
-            <div class="profile-summary"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><div><h2 style="margin:0">Naledi<br />Mokoena</h2><span class="muted">BCom Economics ·<br />University of Cape<br />Town</span><br /><button>Change photo</button></div></div>
+            <div class="profile-summary"><img class="avatar" src="../assets/images/naledi-avatar.png" alt="Naledi Mokoena" /><div><h2 style="margin:0">Naledi<br />Mokoena</h2><span class="muted">BCom Economics ·<br />University of Cape<br />Town</span><br /><button type="button" disabled title="Photo uploads are not connected in this demo">Change photo</button></div></div>
             <div class="form-row"><div class="field"><label>First name</label><input value="Naledi" /></div><div class="field"><label>Last name</label><input value="Mokoena" /></div></div>
             <div class="field"><label>University email</label><input value="naledi@myuct.ac.za" /></div>
             <div class="form-row"><div class="field"><label>Student number</label><input value="MKNNA001" /></div><div class="field"><label>Year of study</label><input value="2nd year" /></div></div>
@@ -33,9 +34,33 @@
           <article class="panel"><h2>Notifications</h2><label class="toggle-row">Task reminders<input type="checkbox" checked /></label><label class="toggle-row">Lecture reminders<input type="checkbox" checked /></label><label class="toggle-row">Weekly progress email<input type="checkbox" checked /></label><label class="toggle-row">Study streak nudges<input type="checkbox" /></label></article>
           <article class="panel"><h2>AI preferences</h2><label class="toggle-row">Always show citations<input type="checkbox" checked /></label><label class="toggle-row">Suggest flashcards<input type="checkbox" checked /></label><div class="field"><label>Answer style</label><select><option>Concise, then detailed</option></select></div></article>
           <article class="panel"><h2>Connected services</h2><p>Google Drive · Connected</p><p>Microsoft OneDrive · Not connected</p></article>
-          <article class="panel"><h2>Student plan <span class="tag" style="float:right;background:var(--purple);color:white">ACTIVE</span></h2><p>R49 / month · Renews 3 October 2026</p><button>Manage billing</button></article>
+          <article class="panel"><h2>Student plan <span class="tag" style="float:right;background:var(--purple);color:white">DEMO</span></h2><p>Example plan details only; billing is not connected.</p><button type="button" disabled title="Billing is not connected in this demo">Manage billing</button></article>
         </div>
       </section>
     </main>
+    <script>
+      const profileFields = Array.from(
+        document.querySelectorAll(".settings-grid input, .settings-grid select"),
+      );
+      const initialProfileValues = profileFields.map((field) =>
+        field.type === "checkbox" ? field.checked : field.value,
+      );
+      const profileStatus = document.getElementById("profile-status");
+
+      document.getElementById("save-profile").addEventListener("click", () => {
+        profileStatus.textContent =
+          "Changes were not saved. Account storage is not connected in this demo.";
+      });
+      document.getElementById("discard-profile").addEventListener("click", () => {
+        profileFields.forEach((field, index) => {
+          if (field.type === "checkbox") {
+            field.checked = initialProfileValues[index];
+          } else {
+            field.value = initialProfileValues[index];
+          }
+        });
+        profileStatus.textContent = "Unsaved changes were discarded.";
+      });
+    </script>
   </body>
 </html>
