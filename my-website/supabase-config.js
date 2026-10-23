@@ -1,4 +1,4 @@
 window.STUDYHUB_SUPABASE_CONFIG = {
-  url: "YOUR_SUPABASE_PROJECT_URL",
-  publishableKey: "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY"
+  url: "https://qfbxvzbidjkddkcbfjra.supabase.co",
+  publishableKey: "sb_publishable_qDRAOG0MyD4t7iT5EuJafA_vZLXfYDc"
 };
