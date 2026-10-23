@@ -38,7 +38,7 @@ studyhub-web/
 
 ## Current Features
 
-The website includes a basic to-do list, task filters, chat, FAQ, login/sign-up pages, study files, schedule, AI summary pages, and a pricing-plan comparison table.
+The website includes a basic to-do list, task filters, chat, FAQ, sign-up/login forms, study files, schedule, AI summary pages, and a pricing-plan comparison table.
 
 Most features use demo data and are not connected to a backend. The chat has a few offline demo replies and can use OpenAI for real answers when run through the local chat server:
 
@@ -50,7 +50,9 @@ The API key stays on the server and must not be added to browser code or committ
 
 The local server binds to `127.0.0.1` by default. It serves the static pages and the chat API; static hosts such as GitHub Pages do not run that API.
 
-Account creation and login are not connected to an account service. The contact form opens an email draft for the visitor to review, and the files page only validates selected files locally. Dashboard content and pricing are demo data; no account details, files, tasks, or payments are stored by this site. Do not use it to collect real user data or payments until those services are implemented and configured.
+Email/password account creation and login use Supabase Auth after setup. Before they can work, create a Supabase project and set the project's URL and publishable (or legacy anon) key in `my-website/supabase-config.js`. In Supabase Authentication settings, allow the deployed site URL (`https://youssefelshazly323-debug.github.io`) and the signup page as redirect URLs, and configure email confirmation as desired. The publishable/anon key is intended for browser use; never put a service-role or secret key in this website. Google sign-in is not configured.
+
+Supabase Auth stores account credentials, but the rest of the website is still a demo: dashboard content and pricing are examples, files are only validated locally, and contact opens an email draft. No account-specific dashboard data or payments are implemented. Do not use this site for real study records or payments.
 
 The GitHub Actions workflow publishes the contents of `my-website` to GitHub Pages when changes are pushed to `main`. On GitHub Pages, the chat uses only its built-in offline examples; generated answers require a separately hosted and protected API.
 

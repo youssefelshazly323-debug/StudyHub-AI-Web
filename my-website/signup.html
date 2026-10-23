@@ -158,6 +158,9 @@
       .auth-status[hidden] {
         display: none;
       }
+      .auth-status.ok {
+        color: #218838;
+      }
       .err {
         display: block;
         margin: -8px 0 12px;
@@ -420,8 +423,7 @@
             </button>
           </form>
           <p class="legal">
-            Account creation is not connected yet, so this demo does not save
-            your details. Already have an account?
+            Create an account with email and password. Already have an account?
             <a href="?tab=login">Log in.</a>
           </p>
         </div>
@@ -455,6 +457,8 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
     <script>
       function switchTab(tab) {
         const isSignup = tab === "signup";
@@ -476,11 +480,84 @@
       if (params.get("tab") === "login") switchTab("login");
 
       const authStatus = document.getElementById("auth-status");
-      const unavailableMessage =
-        "Account access is not configured yet. Your details were not sent or saved.";
+      function showAuthStatus(message, success) {
+        authStatus.textContent = message;
+        authStatus.classList.toggle("ok", Boolean(success));
+        authStatus.hidden = false;
+      }
+
+      const config = window.STUDYHUB_SUPABASE_CONFIG;
+      const configIsReady =
+        config &&
+        /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(config.url) &&
+        config.publishableKey &&
+        !config.publishableKey.startsWith("YOUR_");
+      const supabaseSdk = window.supabase;
+      const authClient =
+        configIsReady && supabaseSdk
+          ? supabaseSdk.createClient(config.url, config.publishableKey)
+          : null;
+
+      async function submitAuth(form, button, action) {
+        if (!form.reportValidity()) return;
+        if (!configIsReady) {
+          showAuthStatus(
+            "Supabase is not configured yet. Add your project URL and publishable/anon key to supabase-config.js."
+          );
+          return;
+        }
+        if (!authClient) {
+          showAuthStatus(
+            "The authentication library did not load. Check your internet connection and try again."
+          );
+          return;
+        }
+
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = action === "signup" ? "Creating account..." : "Signing in...";
+        try {
+          if (action === "signup") {
+            const formData = new FormData(form);
+            const { data, error } = await authClient.auth.signUp({
+              email: formData.get("email").trim(),
+              password: formData.get("password"),
+              options: {
+                emailRedirectTo: window.location.href.split("?")[0],
+                data: {
+                  first_name: formData.get("firstName").trim(),
+                  last_name: formData.get("lastName").trim(),
+                  university: formData.get("university").trim()
+                }
+              }
+            });
+            if (error) throw error;
+            showAuthStatus(
+              data.session
+                ? "Your account is ready. You are signed in."
+                : "Account created. Check your email for a confirmation link before signing in.",
+              true
+            );
+          } else {
+            const formData = new FormData(form);
+            const { error } = await authClient.auth.signInWithPassword({
+              email: formData.get("email").trim(),
+              password: formData.get("password")
+            });
+            if (error) throw error;
+            showAuthStatus("Signed in successfully.", true);
+          }
+        } catch (error) {
+          showAuthStatus(error.message || "Authentication failed. Please try again.");
+        } finally {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      }
+
       const signupForm = document.getElementById("signup-form");
       signupForm.noValidate = true;
-      signupForm.addEventListener("submit", (event) => {
+      signupForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         const email = signupForm.elements.email;
         const password = signupForm.elements.password;
@@ -503,27 +580,32 @@
         });
         if (!valid || !signupForm.checkValidity()) {
           if (!valid) {
-            authStatus.textContent = "Please fix the errors in the form.";
-            authStatus.hidden = false;
+            showAuthStatus("Please fix the errors in the form.");
           } else {
             signupForm.reportValidity();
           }
           return;
         }
-        authStatus.textContent = unavailableMessage;
-        authStatus.hidden = false;
+        await submitAuth(
+          signupForm,
+          signupForm.querySelector('button[type="submit"]'),
+          "signup"
+        );
       });
-      document.getElementById("login-form").addEventListener("submit", (event) => {
+      const loginForm = document.getElementById("login-form");
+      loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-        if (!event.currentTarget.reportValidity()) return;
-        authStatus.textContent = unavailableMessage;
-        authStatus.hidden = false;
+        await submitAuth(
+          loginForm,
+          loginForm.querySelector('button[type="submit"]'),
+          "login"
+        );
       });
       document.querySelectorAll(".google-button").forEach((button) => {
         button.addEventListener("click", () => {
-          authStatus.textContent =
-            "Google sign-in is not configured yet. No account was accessed.";
-          authStatus.hidden = false;
+          showAuthStatus(
+            "Google sign-in is not enabled yet. Use email and password instead."
+          );
         });
       });
     </script>
