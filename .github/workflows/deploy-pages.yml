@@ -40,13 +40,6 @@ jobs:
           cache: npm
           cache-dependency-path: my-website/package-lock.json
 
-      - name: Check package.json
-        working-directory: my-website
-        run: |
-          pwd
-          node -p "JSON.stringify(require('./package.json').scripts, null, 2)"
-          npm run
-
       - name: Install dependencies
         working-directory: my-website
         run: npm ci
@@ -54,6 +47,12 @@ jobs:
       - name: Build website
         working-directory: my-website
         run: npm run build
+
+      - name: Verify website output
+        run: |
+          echo "Checking website files..."
+          ls -la my-website/dist
+          test -f my-website/dist/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
