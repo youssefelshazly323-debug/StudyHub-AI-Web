@@ -1,613 +1,588 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign up / Log in — StudyHub AI</title>
-    <style>
-      :root {
-        --blue: #2f4ea0;
-        --purple: #7b5fc4;
-        --bg: #f5f6fa;
-        --panel: #ffffff;
-        --panel-soft: #eef1fb;
-        --text: #1c1f2a;
-        --muted: #7b8092;
-        --border: #e4e7f0;
-        --button: var(--blue);
-        --button-text: #ffffff;
-      }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: Arial, Helvetica, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.4;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      button {
-        font-family: inherit;
-        cursor: pointer;
-      }
-      input,
-      select,
-      textarea {
-        font-family: inherit;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up / Log in — StudyHub AI</title>
 
-      .btn {
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-weight: 700;
-        font-size: 14px;
-        border: 1px solid var(--text);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-      }
-      .btn-primary {
-        background: var(--button);
-        color: var(--button-text);
-      }
-      .btn-outline {
-        background: #fff;
-        color: var(--text);
-      }
+  <style>
+    :root {
+      --blue: #3262ad;
+      --purple: #9680cb;
+      --bg: #f3f5fa;
+      --text: #263b66;
+      --muted: #7890b6;
+      --border: #dce4f2;
+      --white: #fff;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .auth-shell {
+      display: grid;
+      grid-template-columns: 42% 58%;
+      min-height: 100vh;
+    }
+
+    .auth-visual {
+      background: var(--blue);
+      color: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.15);
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+    }
+
+    .auth-photo {
+      min-height: 340px;
+      margin: 25px 0;
+      border-radius: 17px;
+      background:
+        linear-gradient(rgba(25,50,100,.15), rgba(25,50,100,.4)),
+        url("assets/images/study-group-reference.png") center/cover,
+        linear-gradient(135deg, #8da8d9, #263e80);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      text-align: center;
+      gap: 14px;
+    }
+
+    .auth-photo-badge {
+      background: rgba(255,255,255,.2);
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .auth-photo h2 {
+      font-size: 25px;
+      max-width: 320px;
+    }
+
+    .auth-photo p {
+      font-size: 14px;
+      max-width: 300px;
+    }
+
+    .auth-quote {
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .auth-panel {
+      width: 100%;
+      max-width: 650px;
+      margin: auto;
+      padding: 45px 10%;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .auth-tabs button {
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: white;
+      color: var(--muted);
+      font-weight: bold;
+    }
+
+    .auth-tabs button.active {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+
+    h1 {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: white;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .field input:focus {
+      outline: 2px solid #b6c9f0;
+      border-color: var(--blue);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .btn {
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      padding: 11px 17px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #244b91;
+    }
+
+    .auth-submit {
+      min-width: 150px;
+    }
+
+    .auth-status {
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background: #fff0f0;
+      color: #a32121;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .auth-status.ok {
+      background: #eaf8ee;
+      color: #176b32;
+    }
+
+    .auth-status[hidden] {
+      display: none;
+    }
+
+    .err {
+      display: block;
+      margin-top: 4px;
+      color: #b42318;
+      font-size: 12px;
+    }
+
+    .legal {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legal a {
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--border);
+    }
+
+    @media (max-width: 850px) {
       .auth-shell {
-        display: grid;
-        grid-template-columns: 1fr 1.15fr;
-        min-height: 100vh;
-      }
-      .auth-visual {
-        background: var(--blue);
-        color: #fff;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-right: 1px solid var(--border);
-      }
-      .auth-visual .logo-box {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.12);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .auth-photo {
-        width: 100%;
-        border-radius: 16px;
-        height: 340px;
-        background: linear-gradient(135deg, #7a9bd6, #2c4b98);
-        margin: 20px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 24px;
-        text-align: center;
-        gap: 12px;
-        border: 1px solid var(--border);
-        color: #111;
-      }
-      .auth-photo-badge {
-        background: rgba(47, 78, 160, 0.12);
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 700;
-      }
-      .auth-photo h2 {
-        font-size: 22px;
-        font-weight: 700;
-      }
-      .auth-photo p {
-        font-size: 13px;
-        color: var(--muted);
-        max-width: 280px;
+        grid-template-columns: 1fr;
       }
 
-      .auth-quote {
-        font-style: italic;
-        font-size: 14px;
-        opacity: 0.9;
-      }
-      .auth-panel {
-        padding: 56px 64px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        max-width: 560px;
-      }
-      .auth-tabs {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 28px;
-      }
-      .auth-tabs button {
-        flex: 0 0 auto;
-        padding: 10px 20px;
-        border-radius: 10px;
-        border: 1px solid var(--border);
-        background: #fff;
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--muted);
-      }
-      .auth-tabs button.active {
-        background: var(--blue);
-        color: #fff;
-        border-color: var(--blue);
-      }
-      .auth-status {
-        margin: -14px 0 20px;
-        color: #9b1c1c;
-        font-size: 13px;
-      }
-      .auth-status[hidden] {
+      .auth-visual {
         display: none;
       }
-      .auth-status.ok {
-        color: #218838;
-      }
-      .err {
-        display: block;
-        margin: -8px 0 12px;
-        color: #c0392b;
-        font-size: 12px;
-      }
-      .auth-panel h1 {
-        font-size: 26px;
-        margin-bottom: 6px;
-      }
-      .auth-panel .sub {
-        color: var(--muted);
-        font-size: 14px;
-        margin-bottom: 24px;
-      }
-      .field label {
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 6px;
-        display: block;
-      }
-      .field input {
-        width: 100%;
-        padding: 12px 14px;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        font-size: 14px;
-        margin-bottom: 16px;
-        background: #fff;
-      }
-      .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-      .hint {
-        font-size: 12px;
-        color: var(--muted);
-        margin: -10px 0 16px;
-      }
-      .divider {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 700;
-        margin: 20px 0;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      .divider::before,
-      .divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-      }
-      .legal {
-        font-size: 12px;
-        color: var(--muted);
-        margin-top: 16px;
-      }
-      .legal a {
-        color: var(--text);
-        font-weight: 600;
-      }
-      :root {
-        --blue: #3262ad;
-        --purple: #9680cb;
-        --bg: #f3f5fa;
-        --text: #3262ad;
-        --muted: #7896c6;
-        --border: #8eabe2;
-      }
-      body {
-        background: #fff;
-        color: var(--blue);
-      }
-      .btn {
-        min-height: 30px;
-        padding: 6px 12px;
-        border-color: var(--blue);
-        border-radius: 8px;
-        font-size: 11px;
-      }
-      .auth-shell {
-        grid-template-columns: 42.3% 57.7%;
-      }
-      .auth-visual {
-        padding: 39px 39px 35px;
-        border: 0;
-      }
-      .auth-visual .logo-box {
-        width: 27px;
-        height: 27px;
-        border-radius: 7px;
-      }
-      .auth-photo {
-        height: 375px;
-        margin: 20px 0 45px;
-        border: 0;
-        border-radius: 17px;
-        background: url("assets/images/study-group-reference.png") center / cover;
-        box-shadow: none;
-      }
-      .auth-photo-badge {
-        background: rgba(50, 98, 173, .82);
-        color: white;
-      }
-      .auth-photo h2 {
-        max-width: 290px;
-        font-size: 25px;
-        text-shadow: 0 1px 5px rgba(0, 0, 0, .35);
-      }
-      .auth-photo p {
-        color: white;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, .5);
-      }
-      .auth-quote {
-        font-size: 9px;
-      }
+
       .auth-panel {
-        width: 100%;
-        max-width: none;
-        padding: 40px 14%;
-        justify-content: flex-start;
+        max-width: 560px;
+        padding: 35px 24px;
       }
-      .auth-tabs {
-        gap: 6px;
-        margin-bottom: 13px;
-      }
-      .auth-tabs button {
-        padding: 7px 12px;
-        border-color: var(--blue);
-        border-radius: 8px;
-        font-size: 11px;
-      }
-      .auth-tabs button.active {
-        background: var(--blue);
-      }
-      .auth-panel h1 {
-        margin-bottom: 8px;
-        font-size: 24px;
-      }
-      .auth-panel .sub {
-        margin-bottom: 14px;
-        font-size: 11px;
-      }
-      .field label {
-        margin-bottom: 4px;
-        font-size: 9px;
-      }
-      .field input {
-        min-height: 34px;
-        margin-bottom: 10px;
-        padding: 8px 10px;
-        border-color: var(--purple);
-        border-radius: 9px;
-        font-size: 10px;
-      }
+    }
+
+    @media (max-width: 500px) {
       .form-row {
-        gap: 9px;
-      }
-      .hint {
-        margin: -3px 0 11px;
-        font-size: 10px;
-      }
-      .divider {
-        margin: 11px 0;
-        font-size: 8px;
-      }
-      .legal {
-        margin-top: 13px;
-        font-size: 10px;
-      }
-      .google-button {
-        width: 137px;
-        margin-bottom: 13px;
-      }
-      .auth-submit {
-        width: 128px;
+        grid-template-columns: 1fr;
+        gap: 0;
       }
 
-      @media (max-width: 900px) {
-        .auth-shell {
-          grid-template-columns: 1fr;
-        }
-        .auth-visual {
-          display: none;
-        }
-        .auth-panel {
-          max-width: 560px;
-          margin: 0 auto;
-          padding: 34px 24px;
-        }
+      h1 {
+        font-size: 23px;
       }
-      @media (max-width: 520px) {
-        .form-row {
-          grid-template-columns: 1fr;
-          gap: 0;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="auth-shell">
-      <div class="auth-visual">
-        <span class="logo-box">📖</span>
-        <div>
-          <div class="auth-photo" role="img" aria-label="Two students studying together on campus"></div>
-          <p class="auth-quote">
-            "I know exactly what to study next." — Zinhle, Wits
-          </p>
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-shell">
+    <aside class="auth-visual">
+      <div class="logo-box">📖</div>
+
+      <div>
+        <div class="auth-photo">
+          <span class="auth-photo-badge">STUDY SMARTER</span>
+          <h2>Your study journey starts here.</h2>
+          <p>Organise your work, understand your notes and reach your goals.</p>
         </div>
+
+        <p class="auth-quote">
+          "I know exactly what to study next." — Zinhle, Wits
+        </p>
+      </div>
+    </aside>
+
+    <main class="auth-panel">
+      <div class="auth-tabs">
+        <button id="tab-signup" class="active" type="button"
+          aria-selected="true" aria-controls="form-signup">
+          Create account
+        </button>
+
+        <button id="tab-login" type="button"
+          aria-selected="false" aria-controls="form-login">
+          Log in
+        </button>
       </div>
 
-      <div class="auth-panel">
-        <div class="auth-tabs">
-          <button id="tab-signup" class="active" type="button" aria-selected="true" aria-controls="form-signup" onclick="switchTab('signup')">
-            Create account
-          </button>
-          <button id="tab-login" type="button" aria-selected="false" aria-controls="form-login" onclick="switchTab('login')">Log in</button>
-        </div>
-        <p class="auth-status" id="auth-status" role="status" aria-live="polite" hidden></p>
+      <p id="auth-status" class="auth-status"
+        role="status" aria-live="polite" hidden></p>
 
-        <!-- SIGN UP FORM -->
-        <div id="form-signup">
-          <h1>Create your StudyHub account</h1>
-          <p class="sub">Start free. No card needed.</p>
-          <button class="btn btn-outline google-button" type="button">
-            🔍 Continue with Google
-          </button>
-          <div class="divider">or with email</div>
-          <form id="signup-form">
-            <div class="form-row">
-              <div class="field">
-                <label for="signup-first-name">First name</label
-                ><input id="signup-first-name" name="firstName" type="text" autocomplete="given-name" placeholder="Joo" required />
-              </div>
-              <div class="field">
-                <label for="signup-last-name">Last name</label
-                ><input id="signup-last-name" name="lastName" type="text" autocomplete="family-name" placeholder="Elshazly" required />
-              </div>
-            </div>
-            <div class="field">
-              <label for="signup-email">Email</label
-              ><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
-            </div>
-            <div class="field">
-              <label for="signup-password">Password</label
-              ><input id="signup-password" name="password" type="password" autocomplete="new-password" placeholder="Enter a password" minlength="8" required />
-            </div>
-            <div class="field">
-              <label for="signup-university">University</label
-              ><input id="signup-university" name="university" type="text" autocomplete="organization" placeholder="Emeris" required />
-            </div>
-            <button class="btn btn-primary auth-submit" type="submit">
-              Create free account
-            </button>
-          </form>
-          <p class="legal">
-            Create an account with email and password. Already have an account?
-            <a href="?tab=login">Log in.</a>
-          </p>
-        </div>
+      <section id="form-signup">
+        <h1>Create your StudyHub account</h1>
+        <p class="sub">Start free. No card needed.</p>
 
-        <!-- LOG IN FORM -->
-        <div id="form-login" style="display: none">
-          <h1>Welcome back</h1>
-          <p class="sub">Jump back in and continue from where you left off.</p>
-          <button class="btn btn-outline google-button" type="button">
-            🔍 Continue with Google
-          </button>
-          <div class="divider">or with email</div>
-          <form id="login-form">
-            <div class="field">
-              <label for="login-email">Email</label
-              ><input id="login-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
-            </div>
-            <div class="field">
-              <label for="login-password">Password</label
-              ><input id="login-password" name="password" type="password" autocomplete="current-password" required />
-            </div>
-            <button class="btn btn-primary auth-submit" type="submit">
-              Sign in
-            </button>
-          </form>
-          <p class="legal">
-            Don't have an account?
-            <a href="?tab=signup">Create one free.</a>
-          </p>
-        </div>
-      </div>
-    </div>
+        <div class="divider">Create an account with email</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js"></script>
-    <script>
-      function switchTab(tab) {
-        const isSignup = tab === "signup";
-        document
-          .getElementById("tab-signup")
-          .classList.toggle("active", isSignup);
-        document
-          .getElementById("tab-login")
-          .classList.toggle("active", !isSignup);
-        document.getElementById("tab-signup").setAttribute("aria-selected", String(isSignup));
-        document.getElementById("tab-login").setAttribute("aria-selected", String(!isSignup));
-        document.getElementById("form-signup").style.display =
-          isSignup ? "block" : "none";
-        document.getElementById("form-login").style.display =
-          isSignup ? "none" : "block";
-        document.getElementById("auth-status").hidden = true;
+        <form id="signup-form">
+          <div class="form-row">
+            <div class="field">
+              <label for="signup-first-name">First name</label>
+              <input id="signup-first-name" name="firstName"
+                type="text" autocomplete="given-name"
+                placeholder="First name" required>
+            </div>
+
+            <div class="field">
+              <label for="signup-last-name">Last name</label>
+              <input id="signup-last-name" name="lastName"
+                type="text" autocomplete="family-name"
+                placeholder="Last name" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="signup-email">Email</label>
+            <input id="signup-email" name="email"
+              type="email" autocomplete="email"
+              placeholder="you@example.com" required>
+          </div>
+
+          <div class="field">
+            <label for="signup-password">Password</label>
+            <input id="signup-password" name="password"
+              type="password" autocomplete="new-password"
+              minlength="8" placeholder="At least 8 characters" required>
+          </div>
+
+          <div class="field">
+            <label for="signup-university">University</label>
+            <input id="signup-university" name="university"
+              type="text" autocomplete="organization"
+              placeholder="Your university" required>
+          </div>
+
+          <button class="btn btn-primary auth-submit" type="submit">
+            Create free account
+          </button>
+        </form>
+
+        <p class="legal">
+          Already have an account?
+          <a href="?tab=login" id="link-login">Log in.</a>
+        </p>
+      </section>
+
+      <section id="form-login" hidden>
+        <h1>Welcome back</h1>
+        <p class="sub">Log in to continue your study journey.</p>
+
+        <div class="divider">Log in with email</div>
+
+        <form id="login-form">
+          <div class="field">
+            <label for="login-email">Email</label>
+            <input id="login-email" name="email"
+              type="email" autocomplete="email"
+              placeholder="you@example.com" required>
+          </div>
+
+          <div class="field">
+            <label for="login-password">Password</label>
+            <input id="login-password" name="password"
+              type="password" autocomplete="current-password"
+              required>
+          </div>
+
+          <button class="btn btn-primary auth-submit" type="submit">
+            Sign in
+          </button>
+        </form>
+
+        <p class="legal">
+          Don't have an account?
+          <a href="?tab=signup" id="link-signup">Create one free.</a>
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <!-- Load the Supabase library first -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Load your project configuration -->
+  <script src="supabase-config.js"></script>
+
+  <script>
+    const authStatus = document.getElementById("auth-status");
+    const signupSection = document.getElementById("form-signup");
+    const loginSection = document.getElementById("form-login");
+    const signupTab = document.getElementById("tab-signup");
+    const loginTab = document.getElementById("tab-login");
+
+    function showAuthStatus(message, success = false) {
+      authStatus.textContent = message;
+      authStatus.classList.toggle("ok", success);
+      authStatus.hidden = false;
+    }
+
+    function switchTab(tab) {
+      const isSignup = tab === "signup";
+
+      signupSection.hidden = !isSignup;
+      loginSection.hidden = isSignup;
+
+      signupTab.classList.toggle("active", isSignup);
+      loginTab.classList.toggle("active", !isSignup);
+
+      signupTab.setAttribute("aria-selected", String(isSignup));
+      loginTab.setAttribute("aria-selected", String(!isSignup));
+
+      authStatus.hidden = true;
+    }
+
+    signupTab.addEventListener("click", () => switchTab("signup"));
+    loginTab.addEventListener("click", () => switchTab("login"));
+
+    document.getElementById("link-login").addEventListener("click", (event) => {
+      event.preventDefault();
+      switchTab("login");
+      history.replaceState(null, "", "?tab=login");
+    });
+
+    document.getElementById("link-signup").addEventListener("click", (event) => {
+      event.preventDefault();
+      switchTab("signup");
+      history.replaceState(null, "", "?tab=signup");
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    switchTab(params.get("tab") === "login" ? "login" : "signup");
+
+    // Read and validate the project configuration.
+    const config = window.STUDYHUB_SUPABASE_CONFIG;
+
+    const configIsReady =
+      config &&
+      typeof config.url === "string" &&
+      /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(config.url.trim()) &&
+      typeof config.publishableKey === "string" &&
+      /^(sb_publishable_[a-zA-Z0-9_-]+|eyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+)$/.test(
+        config.publishableKey.trim()
+      );
+
+    let authClient = null;
+
+    if (configIsReady && window.supabase &&
+        typeof window.supabase.createClient === "function") {
+      try {
+        authClient = window.supabase.createClient(
+          config.url.trim().replace(/\/$/, ""),
+          config.publishableKey.trim()
+        );
+      } catch (error) {
+        console.error("Could not initialise Supabase:", error);
       }
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("tab") === "login") switchTab("login");
+    }
 
-      const authStatus = document.getElementById("auth-status");
-      function showAuthStatus(message, success) {
-        authStatus.textContent = message;
-        authStatus.classList.toggle("ok", Boolean(success));
-        authStatus.hidden = false;
+    async function submitAuth(form, action) {
+      if (!form.reportValidity()) return;
+
+      if (!configIsReady) {
+        showAuthStatus(
+          "Supabase configuration is missing or invalid. Check supabase-config.js."
+        );
+        console.error("Supabase configuration:", config);
+        return;
       }
 
-      const config = window.STUDYHUB_SUPABASE_CONFIG;
-      const configIsReady =
-        config &&
-        /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(config.url) &&
-        config.publishableKey &&
-        !config.publishableKey.startsWith("YOUR_");
-      const supabaseSdk = window.supabase;
-      const authClient =
-        configIsReady && supabaseSdk
-          ? supabaseSdk.createClient(config.url, config.publishableKey)
-          : null;
+      if (!window.supabase) {
+        showAuthStatus(
+          "The Supabase library did not load. Check your internet connection and reload the page."
+        );
+        return;
+      }
 
-      async function submitAuth(form, button, action) {
-        if (!form.reportValidity()) return;
-        if (!configIsReady) {
-          showAuthStatus(
-            "Supabase is not configured yet. Add your project URL and publishable/anon key to supabase-config.js."
-          );
-          return;
-        }
-        if (!authClient) {
-          showAuthStatus(
-            "The authentication library did not load. Check your internet connection and try again."
-          );
-          return;
-        }
+      if (!authClient) {
+        showAuthStatus(
+          "Supabase could not start. Check the browser console for details."
+        );
+        return;
+      }
 
-        const originalText = button.textContent;
-        button.disabled = true;
-        button.textContent = action === "signup" ? "Creating account..." : "Signing in...";
-        try {
-          if (action === "signup") {
-            const formData = new FormData(form);
-            const { data, error } = await authClient.auth.signUp({
-              email: formData.get("email").trim(),
-              password: formData.get("password"),
-              options: {
-                emailRedirectTo: window.location.href.split("?")[0],
-                data: {
-                  first_name: formData.get("firstName").trim(),
-                  last_name: formData.get("lastName").trim(),
-                  university: formData.get("university").trim()
-                }
+      const button = form.querySelector('button[type="submit"]');
+      const originalText = button.textContent;
+
+      button.disabled = true;
+      button.textContent = action === "signup"
+        ? "Creating account..."
+        : "Signing in...";
+
+      try {
+        const formData = new FormData(form);
+        const email = String(formData.get("email")).trim();
+        const password = String(formData.get("password"));
+
+        if (action === "signup") {
+          const firstName = String(formData.get("firstName")).trim();
+          const lastName = String(formData.get("lastName")).trim();
+          const university = String(formData.get("university")).trim();
+
+          const { data, error } = await authClient.auth.signUp({
+            email,
+            password,
+            options: {
+              emailRedirectTo: window.location.origin +
+                window.location.pathname,
+              data: {
+                first_name: firstName,
+                last_name: lastName,
+                university: university
               }
-            });
-            if (error) throw error;
+            }
+          });
+
+          if (error) throw error;
+
+          if (data.session) {
             showAuthStatus(
-              data.session
-                ? "Your account is ready. You are signed in."
-                : "Account created. Check your email for a confirmation link before signing in.",
+              "Your account was created successfully. You are now signed in.",
               true
             );
           } else {
-            const formData = new FormData(form);
-            const { error } = await authClient.auth.signInWithPassword({
-              email: formData.get("email").trim(),
-              password: formData.get("password")
+            showAuthStatus(
+              "Your account was created. Check your email for the confirmation link before logging in.",
+              true
+            );
+          }
+        } else {
+          const { data, error } =
+            await authClient.auth.signInWithPassword({
+              email,
+              password
             });
-            if (error) throw error;
-            showAuthStatus("Signed in successfully.", true);
-          }
-        } catch (error) {
-          showAuthStatus(error.message || "Authentication failed. Please try again.");
-        } finally {
-          button.disabled = false;
-          button.textContent = originalText;
-        }
-      }
 
-      const signupForm = document.getElementById("signup-form");
-      signupForm.noValidate = true;
-      signupForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const email = signupForm.elements.email;
-        const password = signupForm.elements.password;
-        const checks = [
-          [email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()), "Enter a valid email address."],
-          [password, password.value.length < 8, "Password must be at least 8 characters."]
-        ];
-        let valid = true;
-        checks.forEach(([input, invalid, message]) => {
-          let error = input.parentElement.querySelector(".err");
-          if (!error) {
-            error = document.createElement("small");
-            error.className = "err";
-            error.setAttribute("aria-live", "polite");
-            input.insertAdjacentElement("afterend", error);
-          }
-          error.textContent = invalid ? message : "";
-          input.setAttribute("aria-invalid", String(Boolean(invalid)));
-          if (invalid) valid = false;
-        });
-        if (!valid || !signupForm.checkValidity()) {
-          if (!valid) {
-            showAuthStatus("Please fix the errors in the form.");
-          } else {
-            signupForm.reportValidity();
-          }
-          return;
+          if (error) throw error;
+
+          showAuthStatus("You are signed in successfully!", true);
+          console.log("Signed-in user ID:", data.user?.id);
         }
-        await submitAuth(
-          signupForm,
-          signupForm.querySelector('button[type="submit"]'),
-          "signup"
+      } catch (error) {
+        console.error("Authentication error:", error);
+
+        showAuthStatus(
+          error.message || "Something went wrong. Please try again."
         );
-      });
-      const loginForm = document.getElementById("login-form");
-      loginForm.addEventListener("submit", async (event) => {
+      } finally {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    }
+
+    document.getElementById("signup-form")
+      .addEventListener("submit", async (event) => {
         event.preventDefault();
-        await submitAuth(
-          loginForm,
-          loginForm.querySelector('button[type="submit"]'),
-          "login"
-        );
+        await submitAuth(event.currentTarget, "signup");
       });
-      document.querySelectorAll(".google-button").forEach((button) => {
-        button.addEventListener("click", () => {
-          showAuthStatus(
-            "Google sign-in is not enabled yet. Use email and password instead."
-          );
-        });
+
+    document.getElementById("login-form")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+        await submitAuth(event.currentTarget, "login");
       });
-    </script>
-  </body>
+  </script>
+</body>
 </html>
