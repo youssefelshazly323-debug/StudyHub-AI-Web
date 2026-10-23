@@ -33,36 +33,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-     
       - name: Prepare website
         run: |
-          set -x
+          set -e
           mkdir -p public
 
-          echo "Checking source files..."
-          ls -la my-website
-
-          find my-website -maxdepth 1 -type f \
-            \( -name "*.html" -o -name "*.css" -o -name "*.js" \) \
-            -exec cp {} public/ \;
+          cp my-website/*.html public/
+          cp my-website/*.css public/
+          cp my-website/*.js public/
 
           if [ -d my-website/assets ]; then
             cp -r my-website/assets public/
           fi
 
-          echo "Checking published files..."
-          ls -la public
-
-          if [ ! -f public/index.html ]; then
-            echo "ERROR: index.html is missing from my-website."
-            exit 1
+          if [ -d my-website/app ]; then
+            find my-website/app -maxdepth 1 -type f \
+              \( -name "*.html" -o -name "*.css" -o -name "*.js" \) \
+              -exec cp -n {} public/ \;
           fi
 
-      - name: Verify website output
-        run: |
-          echo "Checking website files..."
-          ls -la my-website/dist
-          test -f my-website/dist/index.html
+          echo "Published files:"
+          ls -la public
+
+          test -f public/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
