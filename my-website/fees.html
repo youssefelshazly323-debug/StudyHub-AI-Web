@@ -117,6 +117,36 @@
         gap: 22px;
         margin-bottom: 30px;
       }
+      .comparison {
+        margin-bottom: 30px;
+      }
+      .comparison h2 {
+        margin-bottom: 14px;
+      }
+      .comparison-scroll {
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: #fff;
+        -webkit-overflow-scrolling: touch;
+      }
+      .comparison table {
+        width: 100%;
+        min-width: 640px;
+        border-collapse: collapse;
+        text-align: left;
+      }
+      .comparison th,
+      .comparison td {
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .comparison thead {
+        background: var(--panel-soft);
+      }
+      .comparison tbody tr:last-child td {
+        border-bottom: 0;
+      }
       .price-card,
       .calculator {
         background: #fff;
@@ -480,6 +510,65 @@
           >
         </div>
       </div>
+
+      <section class="comparison" aria-labelledby="comparison-title">
+        <h2 id="comparison-title">Compare plans</h2>
+        <div
+          class="comparison-scroll"
+          role="region"
+          aria-label="Plan comparison table; scroll horizontally on small screens"
+          tabindex="0"
+        >
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Free</th>
+                <th scope="col">Student</th>
+                <th scope="col">Study Group</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Monthly price</th>
+                <td>R0</td>
+                <td>R49</td>
+                <td>R129</td>
+              </tr>
+              <tr>
+                <th scope="row">AI summaries</th>
+                <td>3 per month</td>
+                <td>Unlimited</td>
+                <td>Unlimited</td>
+              </tr>
+              <tr>
+                <th scope="row">File storage</th>
+                <td>1 GB</td>
+                <td>20 GB</td>
+                <td>50 GB</td>
+              </tr>
+              <tr>
+                <th scope="row">Study planning</th>
+                <td>Basic tasks</td>
+                <td>Weekly planning</td>
+                <td>Weekly planning</td>
+              </tr>
+              <tr>
+                <th scope="row">AI chat with citations</th>
+                <td>—</td>
+                <td>Included</td>
+                <td>Included</td>
+              </tr>
+              <tr>
+                <th scope="row">Shared spaces and group boards</th>
+                <td>—</td>
+                <td>—</td>
+                <td>Included</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <div class="calculator">
         <div>

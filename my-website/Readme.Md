@@ -38,7 +38,7 @@ studyhub-web/
 
 ## Current Features
 
-The website includes a basic to-do list, task filters, chat, FAQ, login/sign-up pages, study files, schedule, and AI summary pages.
+The website includes a basic to-do list, task filters, chat, FAQ, login/sign-up pages, study files, schedule, AI summary pages, and a pricing-plan comparison table.
 
 Most features use demo data and are not connected to a backend. The chat has a few offline demo replies and can use OpenAI for real answers when run through the local chat server:
 
