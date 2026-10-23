@@ -158,6 +158,12 @@
       .auth-status[hidden] {
         display: none;
       }
+      .err {
+        display: block;
+        margin: -8px 0 12px;
+        color: #c0392b;
+        font-size: 12px;
+      }
       .auth-panel h1 {
         font-size: 26px;
         margin-bottom: 6px;
@@ -403,7 +409,7 @@
             </div>
             <div class="field">
               <label for="signup-password">Password</label
-              ><input id="signup-password" name="password" type="password" autocomplete="new-password" placeholder="Enter a password" required />
+              ><input id="signup-password" name="password" type="password" autocomplete="new-password" placeholder="Enter a password" minlength="8" required />
             </div>
             <div class="field">
               <label for="signup-university">University</label
@@ -472,12 +478,46 @@
       const authStatus = document.getElementById("auth-status");
       const unavailableMessage =
         "Account access is not configured yet. Your details were not sent or saved.";
-      document.querySelectorAll("#signup-form, #login-form").forEach((form) => {
-        form.addEventListener("submit", (event) => {
-          event.preventDefault();
-          authStatus.textContent = unavailableMessage;
-          authStatus.hidden = false;
+      const signupForm = document.getElementById("signup-form");
+      signupForm.noValidate = true;
+      signupForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const email = signupForm.elements.email;
+        const password = signupForm.elements.password;
+        const checks = [
+          [email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()), "Enter a valid email address."],
+          [password, password.value.length < 8, "Password must be at least 8 characters."]
+        ];
+        let valid = true;
+        checks.forEach(([input, invalid, message]) => {
+          let error = input.parentElement.querySelector(".err");
+          if (!error) {
+            error = document.createElement("small");
+            error.className = "err";
+            error.setAttribute("aria-live", "polite");
+            input.insertAdjacentElement("afterend", error);
+          }
+          error.textContent = invalid ? message : "";
+          input.setAttribute("aria-invalid", String(Boolean(invalid)));
+          if (invalid) valid = false;
         });
+        if (!valid || !signupForm.checkValidity()) {
+          if (!valid) {
+            authStatus.textContent = "Please fix the errors in the form.";
+            authStatus.hidden = false;
+          } else {
+            signupForm.reportValidity();
+          }
+          return;
+        }
+        authStatus.textContent = unavailableMessage;
+        authStatus.hidden = false;
+      });
+      document.getElementById("login-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!event.currentTarget.reportValidity()) return;
+        authStatus.textContent = unavailableMessage;
+        authStatus.hidden = false;
       });
       document.querySelectorAll(".google-button").forEach((button) => {
         button.addEventListener("click", () => {

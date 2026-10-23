@@ -54,6 +54,8 @@ Account creation and login are not connected to an account service. The contact 
 
 The GitHub Actions workflow publishes the contents of `my-website` to GitHub Pages when changes are pushed to `main`. On GitHub Pages, the chat uses only its built-in offline examples; generated answers require a separately hosted and protected API.
 
+Live website: https://youssefelshazly323-debug.github.io/StudyHub-AI-Web/
+
 ## Future Plans
 
 I plan to add real user accounts, a database, PDF uploads, working AI features, and saved tasks and schedules.

@@ -206,6 +206,18 @@
         color: var(--muted);
         font-size: 0.8rem;
       }
+      .err,
+      .ok {
+        display: block;
+        margin: -10px 0 12px;
+        font-size: 0.85rem;
+      }
+      .err {
+        color: #c0392b;
+      }
+      .ok {
+        color: #218838;
+      }
       @media (max-width: 900px) {
         .topnav {
           padding: 16px 20px;
@@ -489,15 +501,45 @@
       const contactForm = document.getElementById("contact-form");
       const contactStatus = document.getElementById("contact-status");
 
+      function setContactError(input, message) {
+        let error = input.parentElement.querySelector(".err");
+        if (!error) {
+          error = document.createElement("small");
+          error.className = "err";
+          error.setAttribute("aria-live", "polite");
+          input.insertAdjacentElement("afterend", error);
+        }
+        error.textContent = message;
+        input.setAttribute("aria-invalid", String(Boolean(message)));
+      }
+
+      contactForm.noValidate = true;
       contactForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        if (!contactForm.reportValidity()) return;
+        const fields = contactForm.elements;
+        const checks = [
+          [fields.firstName, !fields.firstName.value.trim(), "Please enter your first name."],
+          [fields.lastName, !fields.lastName.value.trim(), "Please enter your last name."],
+          [fields.email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.value.trim()), "Enter a valid email address."],
+          [fields.topic, !fields.topic.value, "Please choose a topic."],
+          [fields.message, fields.message.value.trim().length < 10, "Write at least 10 characters."]
+        ];
+        let valid = true;
+        checks.forEach(([input, invalid, message]) => {
+          setContactError(input, invalid ? message : "");
+          if (invalid) valid = false;
+        });
+        if (!valid) {
+          contactStatus.className = "form-note err";
+          contactStatus.textContent = "Please fix the red messages and try again.";
+          return;
+        }
 
-        const formData = new FormData(contactForm);
-        const subject = `${formData.get("topic")} enquiry from ${formData.get("firstName")} ${formData.get("lastName")}`;
-        const body = `Name: ${formData.get("firstName")} ${formData.get("lastName")}\nEmail: ${formData.get("email")}\n\n${formData.get("message")}`;
+        contactStatus.className = "form-note ok";
         contactStatus.textContent =
-          "Your email app should open a draft. Review and send it there; nothing has been sent yet.";
+          "Thank you! Your email app will open a draft for you to review and send.";
+        const subject = `${fields.topic.value} enquiry from ${fields.firstName.value} ${fields.lastName.value}`;
+        const body = `Name: ${fields.firstName.value} ${fields.lastName.value}\nEmail: ${fields.email.value}\n\n${fields.message.value}`;
         window.location.href = `mailto:hello@studyhub.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       });
     </script>
