@@ -1,3 +1,4 @@
+html
 <!doctype html>
 <html lang="en">
 <head>
@@ -191,6 +192,11 @@
       background: #244b91;
     }
 
+    .btn:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
     .auth-submit {
       min-width: 150px;
     }
@@ -210,15 +216,9 @@
       color: #176b32;
     }
 
-    .auth-status[hidden] {
+    .auth-status[hidden],
+    section[hidden] {
       display: none;
-    }
-
-    .err {
-      display: block;
-      margin-top: 4px;
-      color: #b42318;
-      font-size: 12px;
     }
 
     .legal {
@@ -400,13 +400,13 @@
     </main>
   </div>
 
-  <!-- Load the Supabase library first -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Load your project configuration -->
   <script src="supabase-config.js"></script>
 
   <script>
+    const HOME_URL =
+      "https://youssefelshazly323-debug.github.io/StudyHub-AI-Web/app/home.html";
+
     const authStatus = document.getElementById("auth-status");
     const signupSection = document.getElementById("form-signup");
     const loginSection = document.getElementById("form-login");
@@ -449,10 +449,6 @@
       history.replaceState(null, "", "?tab=signup");
     });
 
-    const params = new URLSearchParams(window.location.search);
-    switchTab(params.get("tab") === "login" ? "login" : "signup");
-
-    // Read and validate the project configuration.
     const config = window.STUDYHUB_SUPABASE_CONFIG;
 
     const configIsReady =
@@ -475,6 +471,63 @@
         );
       } catch (error) {
         console.error("Could not initialise Supabase:", error);
+      }
+    }
+
+    async function initialiseAuth() {
+      if (!authClient) return;
+
+      // Supabase JS handles the email confirmation callback and exchanges
+      // the returned authorization code for a session.
+      const { data, error } = await authClient.auth.getSession();
+
+      if (error) {
+        console.error("Could not restore auth session:", error);
+      }
+
+      const url = new URL(window.location.href);
+      const hasAuthCode = url.searchParams.has("code");
+      const hasAuthError =
+        url.searchParams.has("error") ||
+        url.searchParams.has("error_description");
+
+      if (hasAuthError) {
+        const message =
+          url.searchParams.get("error_description") ||
+          url.searchParams.get("error") ||
+          "Email confirmation failed. Please try again.";
+
+        showAuthStatus(message, false);
+        return;
+      }
+
+      if (hasAuthCode && data.session) {
+        showAuthStatus(
+          "Email confirmed successfully! Taking you to StudyHub AI...",
+          true
+        );
+
+        // Remove callback parameters before leaving this page.
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+        window.location.replace(HOME_URL);
+        return;
+      }
+
+      // Some Supabase email templates return tokens in the URL hash.
+      if (window.location.hash.includes("access_token=")) {
+        const { data: sessionData, error: sessionError } =
+          await authClient.auth.getSession();
+
+        if (!sessionError && sessionData.session) {
+          showAuthStatus(
+            "Email confirmed successfully! Taking you to StudyHub AI...",
+            true
+          );
+
+          window.history.replaceState({}, document.title, window.location.pathname);
+          window.location.replace(HOME_URL);
+        }
       }
     }
 
@@ -525,8 +578,7 @@
             email,
             password,
             options: {
-              emailRedirectTo: window.location.origin +
-                window.location.pathname,
+              emailRedirectTo: HOME_URL,
               data: {
                 first_name: firstName,
                 last_name: lastName,
@@ -539,12 +591,13 @@
 
           if (data.session) {
             showAuthStatus(
-              "Your account was created successfully. You are now signed in.",
+              "Your account was created successfully. Opening StudyHub AI...",
               true
             );
+            window.location.replace(HOME_URL);
           } else {
             showAuthStatus(
-              "Your account was created. Check your email for the confirmation link before logging in.",
+              "Your account was created. Check your email and click the confirmation link. You will then be redirected to StudyHub AI.",
               true
             );
           }
@@ -557,8 +610,16 @@
 
           if (error) throw error;
 
-          showAuthStatus("You are signed in successfully!", true);
-          console.log("Signed-in user ID:", data.user?.id);
+          if (!data.session) {
+            throw new Error("Login succeeded, but no session was returned. Please try again.");
+          }
+
+          showAuthStatus(
+            "You are signed in successfully. Opening StudyHub AI...",
+            true
+          );
+
+          window.location.replace(HOME_URL);
         }
       } catch (error) {
         console.error("Authentication error:", error);
@@ -583,6 +644,11 @@
         event.preventDefault();
         await submitAuth(event.currentTarget, "login");
       });
+
+    // Show the correct tab and process any confirmation callback.
+    const params = new URLSearchParams(window.location.search);
+    switchTab(params.get("tab") === "login" ? "login" : "signup");
+    initialiseAuth();
   </script>
 </body>
 </html>
