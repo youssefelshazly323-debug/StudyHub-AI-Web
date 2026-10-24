@@ -104,6 +104,7 @@ function demoAnswer(question) {
 
 async function getChatAnswer(messages) {
   const apiKey = process.env.OPENAI_API_KEY;
+  console.log("API key loaded:", Boolean(apiKey), "Length:", apiKey?.trim().length);
   if (!apiKey) {
     return { answer: demoAnswer(messages.at(-1).content), demo: true };
   }
