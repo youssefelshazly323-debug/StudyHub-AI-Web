@@ -874,39 +874,3 @@ img.avatar {
   }
 }
 
-
-/* Fix the account dropdown */
-.account-menu {
-  position: relative !important;
-}
-
-.account-menu .account-dropdown[hidden] {
-  display: none !important;
-}
-
-.account-menu .account-dropdown:not([hidden]) {
-  display: flex !important;
-  flex-direction: column;
-  position: absolute !important;
-  top: auto !important;
-  bottom: calc(100% + 8px) !important;
-  left: 0 !important;
-  right: auto !important;
-  width: 200px !important;
-  z-index: 99999 !important;
-  margin: 0 !important;
-}
-
-/* Keep the dropdown above the account button on mobile */
-@media (max-width: 760px) {
-  .sidebar {
-    overflow: visible !important;
-  }
-
-  .account-menu .account-dropdown:not([hidden]) {
-    bottom: calc(100% + 8px) !important;
-    left: 0 !important;
-    right: auto !important;
-    width: 200px !important;
-  }
-}
