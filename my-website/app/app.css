@@ -786,29 +786,58 @@ img.avatar {
   transform: translateX(13px);
 }
 
+
+
+
 /* Responsive layout */
 
 @media (max-width: 760px) {
   .sidebar {
     position: fixed;
+    inset: 0 auto 0 0;
+    width: 66px;
+    padding: 14px 8px;
     overflow: visible;
+  }
+
+  .app-brand {
+    justify-content: center;
+  }
+
+  .app-brand > :not(.app-logo),
+  .side-nav a > :not(.nav-icon) {
+    display: none;
+  }
+
+  .side-nav a {
+    justify-content: center;
+    padding: 8px 4px;
   }
 
   .account-menu {
     position: relative;
+    width: 100%;
+  }
+
+  .account-menu .account-chip {
+    justify-content: center;
+    padding: 6px 4px;
+  }
+
+  .account-details,
+  .account-menu .dropdown-arrow {
+    display: none;
   }
 
   .account-menu .account-dropdown {
-    position: absolute !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: calc(100% + 8px) !important;
-    left: 0 !important;
-    width: 180px !important;
-    z-index: 9999 !important;
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: calc(100% + 8px);
+    left: 0;
+    width: 200px;
+    z-index: 1000;
   }
-}
-
 
   .app-main {
     width: calc(100% - 66px);
@@ -853,7 +882,7 @@ img.avatar {
   .page-head {
     flex-direction: column;
   }
-
+}
 
 @media (max-width: 450px) {
   .metrics {
@@ -873,4 +902,3 @@ img.avatar {
     grid-template-columns: 19px 1fr auto;
   }
 }
-
