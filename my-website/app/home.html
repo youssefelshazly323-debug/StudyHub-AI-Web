@@ -6,6 +6,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Dashboard — StudyHub AI</title>
   <link rel="stylesheet" href="app.css">
+
+  <style>
+    /* Account dropdown */
+    .account-menu {
+      position: relative;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .account-menu .account-chip {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .account-details {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dropdown-arrow {
+      margin-left: auto;
+      font-size: 20px;
+      transition: transform 0.2s ease;
+    }
+
+    .account-menu .account-chip[aria-expanded="true"] .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    .account-dropdown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(100% + 8px);
+      z-index: 1000;
+      padding: 8px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .account-dropdown[hidden] {
+      display: none !important;
+    }
+
+    .account-dropdown a,
+    .account-dropdown button {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 11px 12px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #263248;
+      text-align: left;
+      text-decoration: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .account-dropdown a:hover,
+    .account-dropdown button:hover {
+      background: #f1f5f9;
+    }
+
+    .account-dropdown button.logout-option {
+      color: #dc2626;
+      border-top: 1px solid #e2e8f0;
+      border-radius: 0 0 8px 8px;
+      margin-top: 5px;
+    }
+
+    .account-dropdown a:focus-visible,
+    .account-dropdown button:focus-visible,
+    .account-menu .account-chip:focus-visible {
+      outline: 2px solid #6478e8;
+      outline-offset: 2px;
+    }
+
+    #auth-message:not([hidden]) {
+      margin: 12px 0;
+      color: #b91c1c;
+    }
+
+    #logout-button:disabled,
+    #dropdown-logout-button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+  </style>
 </head>
 
 <body>
@@ -19,33 +119,70 @@
       <a class="active" href="home.html" aria-label="Home">
         <span class="nav-icon">⌂</span><span>Home</span>
       </a>
+
       <a href="profile.html" aria-label="About">
         <span class="nav-icon">ⓘ</span><span>About</span>
       </a>
+
       <a href="files.html" aria-label="Files">
         <span class="nav-icon">▢</span><span>Files</span>
       </a>
+
       <a href="todo.html" aria-label="To-Do">
         <span class="nav-icon">☷</span><span>To-Do</span>
       </a>
+
       <a href="schedule.html" aria-label="Schedule">
         <span class="nav-icon">▦</span><span>Schedule</span>
       </a>
+
       <a href="chat.html" aria-label="Chat">
         <span class="nav-icon">◌</span><span>Chat</span>
       </a>
+
       <a href="../contact.html" aria-label="Contact">
         <span class="nav-icon">▣</span><span>Contact</span>
       </a>
     </nav>
 
-    <a class="account-chip" href="profile.html" aria-label="Account settings">
-      <img class="avatar" src="../assets/images/naledi-avatar.png" alt="">
-      <span>
-        <span id="account-name">Student</span>
-        <small>Student plan · Settings</small>
-      </span>
-    </a>
+    <!-- Account dropdown menu -->
+    <div class="account-menu" id="account-menu">
+      <button
+        class="account-chip"
+        id="account-menu-button"
+        type="button"
+        aria-label="Open account menu"
+        aria-expanded="false"
+        aria-controls="account-dropdown"
+      >
+        <img
+          class="avatar"
+          src="../assets/images/naledi-avatar.png"
+          alt=""
+        >
+
+        <span class="account-details">
+          <span id="account-name">Student</span>
+          <small>Student plan · My account</small>
+        </span>
+
+        <span class="dropdown-arrow" aria-hidden="true">⌄</span>
+      </button>
+
+      <div class="account-dropdown" id="account-dropdown" hidden>
+        <a href="profile.html">My Profile</a>
+        <a href="profile.html">Settings</a>
+        <a href="../contact.html">Help &amp; Support</a>
+
+        <button
+          class="logout-option"
+          id="dropdown-logout-button"
+          type="button"
+        >
+          Log out
+        </button>
+      </div>
+    </div>
   </aside>
 
   <main class="app-main">
@@ -162,7 +299,7 @@
       </div>
     </section>
 
-    <p id="auth-message" role="status" hidden></p>
+    <p id="auth-message" role="status" aria-live="polite" hidden></p>
 
     <button class="button" id="logout-button" type="button">
       Log out
@@ -197,11 +334,80 @@
         );
       } catch (error) {
         console.error("Supabase initialization failed:", error);
-        document.getElementById("auth-message").hidden = false;
-        document.getElementById("auth-message").textContent =
-          "Unable to connect to the login service. Please reload the page.";
+
+        showMessage(
+          "Unable to connect to the login service. Please reload the page."
+        );
         return;
       }
+
+      const menu = document.getElementById("account-menu");
+      const menuButton = document.getElementById("account-menu-button");
+      const dropdown = document.getElementById("account-dropdown");
+      const logoutButton = document.getElementById("logout-button");
+      const dropdownLogoutButton = document.getElementById(
+        "dropdown-logout-button"
+      );
+
+      function showMessage(message) {
+        const element = document.getElementById("auth-message");
+        element.hidden = false;
+        element.textContent = message;
+      }
+
+      function closeMenu() {
+        dropdown.hidden = true;
+        menuButton.setAttribute("aria-expanded", "false");
+      }
+
+      function toggleMenu() {
+        const isOpen =
+          menuButton.getAttribute("aria-expanded") === "true";
+
+        menuButton.setAttribute("aria-expanded", String(!isOpen));
+        dropdown.hidden = isOpen;
+      }
+
+      menuButton.addEventListener("click", toggleMenu);
+
+      document.addEventListener("click", (event) => {
+        if (!menu.contains(event.target)) {
+          closeMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !dropdown.hidden) {
+          closeMenu();
+          menuButton.focus();
+        }
+      });
+
+      async function logoutUser() {
+        logoutButton.disabled = true;
+        dropdownLogoutButton.disabled = true;
+        closeMenu();
+
+        try {
+          const { error } = await client.auth.signOut();
+
+          if (error) {
+            throw error;
+          }
+
+          window.location.replace(LOGIN_URL);
+        } catch (error) {
+          console.error("Logout failed:", error);
+
+          logoutButton.disabled = false;
+          dropdownLogoutButton.disabled = false;
+
+          showMessage("Could not log out. Please try again.");
+        }
+      }
+
+      logoutButton.addEventListener("click", logoutUser);
+      dropdownLogoutButton.addEventListener("click", logoutUser);
 
       try {
         const { data, error } = await client.auth.getSession();
@@ -220,6 +426,7 @@
 
         const firstName = metadata.first_name || "";
         const lastName = metadata.last_name || "";
+
         const fullName =
           `${firstName} ${lastName}`.trim() || "Student";
 
@@ -230,28 +437,6 @@
 
         document.getElementById("welcome-message").textContent =
           "You're signed in. Let's make today productive!";
-
-        document.getElementById("logout-button").addEventListener(
-          "click",
-          async () => {
-            const button = document.getElementById("logout-button");
-            button.disabled = true;
-
-            const { error: logoutError } = await client.auth.signOut();
-
-            if (logoutError) {
-              console.error("Logout failed:", logoutError);
-              button.disabled = false;
-
-              const message = document.getElementById("auth-message");
-              message.hidden = false;
-              message.textContent = "Could not log out. Please try again.";
-              return;
-            }
-
-            window.location.replace(LOGIN_URL);
-          }
-        );
       } catch (error) {
         console.error("Could not check login session:", error);
         window.location.replace(LOGIN_URL);
