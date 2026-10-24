@@ -36,26 +36,32 @@ jobs:
       - name: Prepare website
         run: |
           set -e
-          mkdir -p public
 
+          mkdir -p public
+          mkdir -p public/app
+
+          # Copy main website files
           cp my-website/*.html public/
           cp my-website/*.css public/
           cp my-website/*.js public/
 
+          # Copy assets
           if [ -d my-website/assets ]; then
             cp -r my-website/assets public/
           fi
 
+          # Copy app files while keeping the /app folder
           if [ -d my-website/app ]; then
-            find my-website/app -maxdepth 1 -type f \
-              \( -name "*.html" -o -name "*.css" -o -name "*.js" \) \
-              -exec cp -n {} public/ \;
+            cp my-website/app/*.html public/app/
+            cp my-website/app/*.css public/app/ 2>/dev/null || true
+            cp my-website/app/*.js public/app/ 2>/dev/null || true
           fi
 
           echo "Published files:"
-          ls -la public
+          find public -maxdepth 2 -type f | sort
 
           test -f public/index.html
+          test -f public/app/home.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
