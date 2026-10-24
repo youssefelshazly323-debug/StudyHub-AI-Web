@@ -787,49 +787,28 @@ img.avatar {
 }
 
 /* Responsive layout */
+
 @media (max-width: 760px) {
   .sidebar {
     position: fixed;
-    width: 66px;
-    padding: 14px 8px;
+    overflow: visible;
   }
 
-  .app-brand {
-    justify-content: center;
-    margin-bottom: 18px;
+  .account-menu {
+    position: relative;
   }
 
-  .app-brand > span:last-child,
-  .side-nav a > span:last-child {
-    display: none;
-  }
-
-  .side-nav a {
-    justify-content: center;
-    padding: 7px;
-  }
-
-  .nav-icon {
-    width: auto;
-  }
-
-  .account-menu .account-chip {
-    justify-content: center;
-    padding: 5px;
-  }
-
-  .account-menu .account-details,
-  .account-menu .dropdown-arrow {
-    display: none;
-  }
-
-  /* Keep dropdown above the profile on small screens too. */
   .account-menu .account-dropdown {
-    right: 0;
-    bottom: calc(100% + 8px);
-    left: 0;
-    width: 180px;
+    position: absolute !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: calc(100% + 8px) !important;
+    left: 0 !important;
+    width: 180px !important;
+    z-index: 9999 !important;
   }
+}
+
 
   .app-main {
     width: calc(100% - 66px);
@@ -874,7 +853,7 @@ img.avatar {
   .page-head {
     flex-direction: column;
   }
-}
+
 
 @media (max-width: 450px) {
   .metrics {
