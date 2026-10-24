@@ -1,3 +1,4 @@
+
 :root {
   --blue: #3262ad;
   --blue-dark: #244d91;
@@ -132,6 +133,7 @@ button:hover,
   color: white;
 }
 
+/* Account area */
 .account-chip {
   display: flex;
   align-items: center;
@@ -142,6 +144,7 @@ button:hover,
   border-radius: 12px;
   background: white;
   box-shadow: 0 5px 12px rgba(43, 68, 119, .07);
+  color: var(--blue);
   font-size: 9px;
 }
 
@@ -167,11 +170,105 @@ img.avatar {
   font-size: 8px;
 }
 
+/* Account dropdown menu */
+.account-menu {
+  position: relative;
+  width: 100%;
+  margin-top: auto;
+}
+
+.account-menu .account-chip {
+  width: 100%;
+  margin-top: 0;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.account-details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.account-details small {
+  display: block;
+  color: var(--purple);
+  font-size: 8px;
+}
+
+.dropdown-arrow {
+  margin-left: auto;
+  font-size: 18px;
+  transition: transform .2s ease;
+}
+
+.account-menu .account-chip[aria-expanded="true"] .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.account-dropdown {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 1000;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 8px 24px rgba(43, 68, 119, .15);
+}
+
+.account-dropdown[hidden] {
+  display: none !important;
+}
+
+.account-dropdown a,
+.account-dropdown button {
+  display: block;
+  width: 100%;
+  min-height: 34px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.account-dropdown a:hover,
+.account-dropdown button:hover {
+  background: var(--bg);
+  filter: none;
+}
+
+.account-dropdown .logout-option {
+  margin-top: 5px;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 8px 8px;
+  color: #dc2626;
+}
+
+.account-menu button:focus-visible,
+.account-dropdown a:focus-visible,
+.account-dropdown button:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
 .app-main {
   width: calc(100% - 170px);
   min-height: 100vh;
   margin-left: 170px;
-  padding: 24px 24px;
+  padding: 24px;
 }
 
 .page-head {
@@ -493,7 +590,13 @@ img.avatar {
   min-height: 0;
   overflow: hidden;
   border: 1px solid #edf0f6;
-  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(16.66% - 1px), #eff1f6 calc(16.66% - 1px), #eff1f6 16.66%);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(16.66% - 1px),
+    #eff1f6 calc(16.66% - 1px),
+    #eff1f6 16.66%
+  );
 }
 
 .calendar > div {
@@ -689,40 +792,61 @@ img.avatar {
   transform: translateX(13px);
 }
 
+/* Responsive layout */
 @media (max-width: 760px) {
   .sidebar {
     position: static;
     width: 66px;
     padding: 14px 8px;
   }
+
   .app-brand {
     justify-content: center;
     margin-bottom: 18px;
   }
+
   .app-brand > span:last-child,
   .side-nav a > span:last-child,
-  .account-chip > span:last-child {
+  .sidebar > .account-chip > span:last-child {
     display: none;
   }
+
   .side-nav a {
     justify-content: center;
     padding: 7px;
   }
+
   .nav-icon {
     width: auto;
   }
-  .account-chip {
+
+  .account-menu .account-chip {
     justify-content: center;
     padding: 5px;
   }
+
+  .account-menu .account-details,
+  .account-menu .dropdown-arrow {
+    display: none;
+  }
+
+  .account-dropdown {
+    right: auto;
+    bottom: 0;
+    left: calc(100% + 8px);
+    width: 180px;
+  }
+
   .app-main {
     width: calc(100% - 66px);
     margin-left: 0;
     padding: 18px 14px;
   }
+
   .metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
   .dashboard-grid,
   .split,
   .settings-grid,
@@ -731,22 +855,28 @@ img.avatar {
     grid-template-columns: 1fr;
     height: auto;
   }
+
   .schedule-layout,
   .chat-layout {
     min-height: 0;
   }
+
   .calendar {
     min-height: 480px;
   }
+
   .document-preview {
     min-height: 400px;
   }
+
   .table {
     min-width: 680px;
   }
+
   .panel.table-panel {
     overflow-x: auto;
   }
+
   .page-head {
     flex-direction: column;
   }
@@ -756,13 +886,16 @@ img.avatar {
   .metrics {
     gap: 7px;
   }
+
   .metric {
     padding: 10px;
   }
+
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
+
   .todo-row {
     grid-template-columns: 19px 1fr auto;
   }
