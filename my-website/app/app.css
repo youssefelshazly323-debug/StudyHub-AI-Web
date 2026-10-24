@@ -786,57 +786,49 @@ img.avatar {
   transform: translateX(13px);
 }
 
-
-
-
 /* Responsive layout */
-
 @media (max-width: 760px) {
   .sidebar {
     position: fixed;
-    inset: 0 auto 0 0;
     width: 66px;
     padding: 14px 8px;
-    overflow: visible;
   }
 
   .app-brand {
     justify-content: center;
+    margin-bottom: 18px;
   }
 
-  .app-brand > :not(.app-logo),
-  .side-nav a > :not(.nav-icon) {
+  .app-brand > span:last-child,
+  .side-nav a > span:last-child {
     display: none;
   }
 
   .side-nav a {
     justify-content: center;
-    padding: 8px 4px;
+    padding: 7px;
   }
 
-  .account-menu {
-    position: relative;
-    width: 100%;
+  .nav-icon {
+    width: auto;
   }
 
   .account-menu .account-chip {
     justify-content: center;
-    padding: 6px 4px;
+    padding: 5px;
   }
 
-  .account-details,
+  .account-menu .account-details,
   .account-menu .dropdown-arrow {
     display: none;
   }
 
+  /* Keep dropdown above the profile on small screens too. */
   .account-menu .account-dropdown {
-    position: absolute;
-    top: auto;
-    right: auto;
+    right: 0;
     bottom: calc(100% + 8px);
     left: 0;
-    width: 200px;
-    z-index: 1000;
+    width: 180px;
   }
 
   .app-main {
