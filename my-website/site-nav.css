@@ -1,3 +1,4 @@
+/* Show navigation links on desktop */
 .mobile-menu {
   display: contents;
 }
@@ -6,7 +7,6 @@
   display: none;
 }
 
-/* Show navigation links on desktop */
 .mobile-menu:not([open]) > nav {
   display: flex;
 }
