@@ -6,6 +6,11 @@
   display: none;
 }
 
+/* Show navigation links on desktop */
+.mobile-menu:not([open]) > nav {
+  display: flex;
+}
+
 @media (max-width: 700px) {
   .mobile-menu {
     position: relative;
