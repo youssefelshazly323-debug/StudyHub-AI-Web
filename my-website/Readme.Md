@@ -57,6 +57,8 @@ Supabase Auth stores account credentials, but the rest of the website is still a
 The GitHub Actions workflow publishes the contents of `my-website` to GitHub Pages when changes are pushed to `main`. On GitHub Pages, the chat uses only its built-in offline examples; generated answers require a separately hosted and protected API.
 
 Live website: https://youssefelshazly323-debug.github.io/StudyHub-AI-Web/
+Presentation Video:https://youtu.be/eNbMOLTOmCU
+Youtube video link:https://youtu.be/aVfj2vlHIsE
 
 ## Future Plans
 
